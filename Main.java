@@ -3,12 +3,14 @@ import javax.swing.*;
 public class Main {
 
     private static void createAndShowGUI() {
-        JFrame frame = new JFrame("Hello");
+        JFrame frame = new JFrame("yo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel label = new JLabel("Hello World");
-        frame.getContentPane().add(label);
+        JLabel label = new JLabel("Welcome to DomiNations");
+        frame.add(label);
 
+	JButton button=new JButton("My Button");
+	frame.add(button);
         frame.pack();
         frame.setVisible(true);
     }

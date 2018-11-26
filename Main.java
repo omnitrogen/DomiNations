@@ -9,16 +9,16 @@ public class Main {
         JLabel label = new JLabel("Welcome to DomiNations");
         frame.add(label);
 
-	JButton button=new JButton("My Button");
-	frame.add(button);
         frame.pack();
         frame.setVisible(true);
     }
 
     public static void main(String[] args) {
+	
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
+		// commentaire
             }
         });
     }

@@ -4,17 +4,34 @@ import java.util.Random;
 
 public class Game {
 
-    public static ArrayList<Domino> deck;
-    public static ArrayList<Player> playerList;
-    public static HashMap<Integer, Domino> selectionBoard = new HashMap<Integer, Domino>();
-    public static int n;
-    public static Random rand;
+    private int numberOfPlayers;
+    private ArrayList<Domino> deck;
+    private ArrayList<Player> playerList;
+    private HashMap<Integer, Domino> selectionBoard;
+    private ArrayList<King> kingList;
+    public static Random rand = new Random();
 
     public Game () {}
 
-    public Game(ArrayList<Domino> deck, ArrayList<Player> playerList, HashMap<Integer, Domino> selectionBoard) {
-        this.deck = deck;
-        this.playerList = playerList;
+    public Game(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+        this.deck = Domino.getDominosFromCSV();
+        for (int i = 0; i < numberOfPlayers; i++) {
+            this.playerList.add("player" + i); // TODO: change initialization with Player constructor
+        }
+        if (numberOfPlayers == 2) {
+            for (int i = 1; i < 5; i++) {
+                this.kingList.add("king" + i + "for player" + i % 2);
+            }
+        } else if (numberOfPlayers == 3) {
+            for (int i = 1; i < 3; i++) {
+                this.kingList.add("king" + i + "for player" + i);
+            }
+        } else {
+            for (int i = 1; i < 4; i++) {
+                this.kingList.add("king" + i + "for player" + i);
+            }
+        }
         this.selectionBoard = selectionBoard;
     }
 
@@ -22,11 +39,7 @@ public class Game {
     /**
      * Initialize a Game.
      */
-    public static void initGame() {
-
-    }
-
-    public static void readDominosFromCSV() {
+    public void initGame() {
 
     }
 
@@ -37,9 +50,8 @@ public class Game {
      * @param  deck {@code ArrayList} the deck from which to pick the elements
      * @return an ArrayList {@code ArrayList} with n elements picked randomly in the deck and delete them from the deck
      */
-    public static ArrayList<Domino> pickNDominos(int n, ArrayList<Domino> deck) {
-        rand = new Random();
-        ArrayList<Domino> nDominos = new ArrayList<Domino>();
+    public ArrayList<Domino> pickNDominos(int n, ArrayList<Domino> deck) {
+        ArrayList<Domino> nDominos = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             int number = rand.nextInt(deck.size());
             nDominos.add(deck.get(number));
@@ -47,6 +59,17 @@ public class Game {
         }
         return nDominos;
     }
+
+
+//    public int[] chooseKingsOrder(ArrayList<King> kingList) {
+//        ArrayList<Domino> nDominos = new ArrayList<>();
+//        for (int i = 0; i < n; i++) {
+//            int number = rand.nextInt(deck.size());
+//            nDominos.add(deck.get(number));
+//            deck.remove(number);
+//        }
+//        return nDominos;
+//    }
 
 
 

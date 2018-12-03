@@ -11,14 +11,12 @@ public class Menu {
         setNumberOfPlayers(sc.nextInt());
     }
 
-    public int getNumberOfPlayers()
-    {
-        return this.numberOfPlayers;
-    }
+    public int getNumberOfPlayers() { return this.numberOfPlayers; }
 
-    public void setNumberOfPlayers(int number)
-    {
-        this.numberOfPlayers = number;
+    public void setNumberOfPlayers(int number) { this.numberOfPlayers = number; }
+
+    public static void main(String[] args) {
+        // insert game here ¯\_(ツ)_/¯
     }
 
 }

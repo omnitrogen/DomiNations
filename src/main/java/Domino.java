@@ -44,11 +44,7 @@ public class Domino {
             while ((line = reader.readLine()) != null) {
                 dominosList.add(new Domino(line));
             }
-
-            for (Domino domino : dominosList) {
-                System.out.println("Numero: " + domino.getNumber() + ", left: " + domino.left_.getTerrain().toString() + ", right: " + domino.right_.getTerrain().toString());
-            }
-
+            
             return dominosList;
         } catch (Exception e) {
             System.out.println("Error: file not found");

@@ -1,12 +1,13 @@
 import java.awt.*;
 
-public class HalfDomino extends Domino {
+public class HalfDomino {
     private int nbCrowns_;
     private TerrainType terrain_;
 
-    public HalfDomino()
+    public HalfDomino(int nbCrowns, String type)
     {
-
+        nbCrowns_ = nbCrowns;
+        terrain_ = TerrainType.fromName(type);
     }
 
     public int getNbCrowns() {
@@ -35,26 +36,40 @@ public class HalfDomino extends Domino {
         SEA("Mer", Color.blue),
         CASTLE("Chateau", Color.white);
 
-        private final String name_;
+        private final String type_;
         private final Color color_;
 
-        private TerrainType(String name, Color color)
+        TerrainType(String type, Color color)
         {
-            name_ = name;
+            type_ = type;
             color_ = color;
         }
 
-        private TerrainType fromName(String name)
+        public static TerrainType fromName(String name)
         {
-            for (TerrainType type: TerrainType.values())
-                if (type.getName() == name)
-                    return type;
-
-            return null;
+            switch (name)
+            {
+                case "Champs":
+                    return TerrainType.FIELDS;
+                case "Foret":
+                    return TerrainType.FOREST;
+                case "Prairie":
+                    return TerrainType.MEADOW;
+                case "Mine":
+                    return TerrainType.MINE;
+                case "Montagne":
+                    return TerrainType.MOUNTAIN;
+                case "Mer":
+                    return TerrainType.SEA;
+                case "Chateau":
+                    return TerrainType.CASTLE;
+                default:
+                    return null;
+            }
         }
 
-        public String getName() {
-            return name_;
+        public String getType() {
+            return type_;
         }
 
         public Color getColor() {

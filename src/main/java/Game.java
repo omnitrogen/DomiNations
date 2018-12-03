@@ -1,19 +1,21 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Game {
 
-    ArrayList<Domino> deck;
-    ArrayList<Player> playerList;
-    int n;
-    Random rand;
-
+    public static ArrayList<Domino> deck;
+    public static ArrayList<Player> playerList;
+    public static HashMap<Integer, Domino> selectionBoard = new HashMap<Integer, Domino>();
+    public static int n;
+    public static Random rand;
 
     public Game () {}
 
-    public Game(ArrayList<Domino> deck, ArrayList<Player> playerList) {
+    public Game(ArrayList<Domino> deck, ArrayList<Player> playerList, HashMap<Integer, Domino> selectionBoard) {
         this.deck = deck;
         this.playerList = playerList;
+        this.selectionBoard = selectionBoard;
     }
 
 
@@ -45,6 +47,8 @@ public class Game {
         }
         return nDominos;
     }
+
+
 
     public static void main(String[] args) {
         // ...

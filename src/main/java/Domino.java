@@ -12,6 +12,7 @@ public class Domino {
         left_ = new HalfDomino(Integer.parseInt(splitted_line[0]), splitted_line[1]);
         right_ = new HalfDomino(Integer.parseInt(splitted_line[2]), splitted_line[3]);
         number_ = Integer.parseInt(splitted_line[4]);
+        isUsed_ = false;
     }
 
     public int getNumber() {

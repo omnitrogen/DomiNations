@@ -5,6 +5,7 @@ public class Domino {
     private int number_;
     private HalfDomino left_;
     private HalfDomino right_;
+    private boolean isUsed_;
 
     public Domino(String line) {
         String[] splitted_line = line.split(",");
@@ -27,6 +28,14 @@ public class Domino {
 
     public HalfDomino getRight() {
         return right_;
+    }
+
+    public boolean isUsed() {
+        return isUsed_;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed_ = used;
     }
 
     public static ArrayList<Domino> getDominosFromCSV() {

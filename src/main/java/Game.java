@@ -17,22 +17,18 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
         this.deck = Domino.getDominosFromCSV();
         for (int i = 0; i < numberOfPlayers; i++) {
-            this.playerList.add("player" + i); // TODO: change initialization with Player constructor
+            this.playerList.add(new Player(i + 1));
         }
         if (numberOfPlayers == 2) {
             for (int i = 1; i < 5; i++) {
-                this.kingList.add("king" + i + "for player" + i % 2);
-            }
-        } else if (numberOfPlayers == 3) {
-            for (int i = 1; i < 3; i++) {
-                this.kingList.add("king" + i + "for player" + i);
+                this.kingList.add(new King((i % 2) + 1));
             }
         } else {
-            for (int i = 1; i < 4; i++) {
-                this.kingList.add("king" + i + "for player" + i);
+            for (int i = 1; i < numberOfPlayers; i++) {
+                this.kingList.add(new King(i));
             }
         }
-        this.selectionBoard = selectionBoard;
+//        this.selectionBoard = ;
     }
 
 

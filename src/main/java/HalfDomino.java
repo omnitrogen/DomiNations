@@ -9,6 +9,22 @@ public class HalfDomino extends Domino {
 
     }
 
+    public int getNbCrowns() {
+        return nbCrowns_;
+    }
+
+    public void setNbCrowns(int nbCrowns_) {
+        this.nbCrowns_ = nbCrowns_;
+    }
+
+    public TerrainType getTerrain() {
+        return terrain_;
+    }
+
+    public void setTerrain(TerrainType terrain_) {
+        this.terrain_ = terrain_;
+    }
+
     public enum TerrainType
     {
         FIELDS("Champs", Color.yellow),

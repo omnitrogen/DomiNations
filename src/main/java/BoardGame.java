@@ -1,19 +1,15 @@
+import java.util.*;
 
 public class BoardGame {
 	
-	static int ID;
-	static HalfDomino.TerrainType boardGame[][] = new HalfDomino.TerrainType[9][9];
+	private int id;
+	private HalfDomino.TerrainType[][] boardGame = new HalfDomino.TerrainType[9][9];
 	
-	public static void main(String[] args)
-	{
-		// Initialise le plateau
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				boardGame[i][j] = null;
-			}
-		}
-		boardGame[4][4] = HalfDomino.TerrainType.CASTLE;	
-		
+	
+	public BoardGame(int id) {
+		this.id = id;
+		this.boardGame = getBoardGame();
+		this.boardGame[4][4] = HalfDomino.TerrainType.CASTLE;
 	}
 	
 	// Verifie que la case à cote du domino n'est pas vide
@@ -21,29 +17,32 @@ public class BoardGame {
 	// que les deux moities du domino sont sur des cases vides
 	// que le plateau reste de la bonne dimension
 	
-	public static boolean checkDominoWellPlaced(Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
-		if (boardGame[xLeft][yLeft - 1] != null && domino.getLeft().getTerrain() == boardGame[xLeft][yLeft - 1] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+	public boolean checkDominoWellPlaced(Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
+		
+		HalfDomino.TerrainType[][] boardGamePlayer = this.getBoardGame();
+		
+		if (boardGamePlayer[xLeft][yLeft - 1] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft - 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGame[xRight][yRight - 1] != null && domino.getRight().getTerrain() == boardGame[xRight][yRight - 1] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight][yRight - 1] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight - 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGame[xLeft - 1][yLeft] != null && domino.getLeft().getTerrain() == boardGame[xLeft - 1][yLeft] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xLeft - 1][yLeft] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft - 1][yLeft] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGame[xRight - 1][yRight] != null && domino.getRight().getTerrain() == boardGame[xRight - 1][yRight] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight - 1][yRight] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight - 1][yRight] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGame[xLeft][yLeft + 1] != null && domino.getLeft().getTerrain() == boardGame[xLeft][yLeft + 1] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xLeft][yLeft + 1] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft + 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGame[xRight][yRight + 1] != null && domino.getRight().getTerrain() == boardGame[xRight][yRight + 1] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight][yRight + 1] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight + 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGame[xLeft + 1][yLeft] != null && domino.getLeft().getTerrain() == boardGame[xLeft + 1][yLeft] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xLeft + 1][yLeft] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft + 1][yLeft] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGame[xRight + 1][yRight] != null && domino.getRight().getTerrain() == boardGame[xRight + 1][yRight] && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight + 1][yRight] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight + 1][yRight] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
 		else {
@@ -60,4 +59,11 @@ public class BoardGame {
 		return false;
 		}
 	}
+		
+	public HalfDomino.TerrainType[][] getBoardGame() { return this.boardGame; }
+
+//	public HalfDomino.TerrainType[][] setBoardGame(Domino domino, ) { 
+//		return this.boardGame; 
+//	}
+	
 }

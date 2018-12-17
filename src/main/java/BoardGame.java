@@ -21,28 +21,28 @@ public class BoardGame {
 		
 		HalfDomino.TerrainType[][] boardGamePlayer = this.getBoardGame();
 		
-		if (boardGamePlayer[xLeft][yLeft - 1] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft - 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xLeft][yLeft - 1] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft - 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGamePlayer[xRight][yRight - 1] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight - 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight][yRight - 1] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight - 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGamePlayer[xLeft - 1][yLeft] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft - 1][yLeft] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xLeft - 1][yLeft] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft - 1][yLeft] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGamePlayer[xRight - 1][yRight] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight - 1][yRight] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight - 1][yRight] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight - 1][yRight] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGamePlayer[xLeft][yLeft + 1] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft + 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xLeft][yLeft + 1] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft + 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGamePlayer[xRight][yRight + 1] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight + 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight][yRight + 1] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight + 1] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGamePlayer[xLeft + 1][yLeft] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft + 1][yLeft] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xLeft + 1][yLeft] != null && domino.getLeft().getTerrain() == boardGamePlayer[xLeft + 1][yLeft] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
-		if (boardGamePlayer[xRight + 1][yRight] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight + 1][yRight] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkBoardGame(domino, xLeft, yLeft, xRight, yRight) == true) {
+		if (boardGamePlayer[xRight + 1][yRight] != null && domino.getRight().getTerrain() == boardGamePlayer[xRight + 1][yRight] && boardGamePlayer[xLeft][yLeft] == null && boardGamePlayer[xRight][yRight] == null && checkIfInBounds(boardGamePlayer, domino, xLeft, yLeft, xRight, yRight) == true) {
 			return true;
 		}
 		else {
@@ -51,10 +51,10 @@ public class BoardGame {
 	}
 		
 	// Verifie que le plateau reste de la bonne dimension
-	public static boolean checkBoardGame(Domino domino, int xLeft, int yLeft, int xRight, int yRight){
+	public static boolean checkIfInBounds(HalfDomino.TerrainType[][] boardGamePlayer, Domino domino, int xLeft, int yLeft, int xRight, int yRight){
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				boardGame[i][j] = null;
+				boardGamePlayer[i][j] = null;
 			}
 		return false;
 		}

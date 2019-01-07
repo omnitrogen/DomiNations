@@ -52,7 +52,7 @@ public class BoardGame {
 	}
 		
 	// Verifie que le plateau reste de la bonne dimension
-	public static boolean checkIfInBounds(HalfDomino.TerrainType[][] boardGamePlayer, Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
+	public boolean checkIfInBounds(HalfDomino.TerrainType[][] boardGamePlayer, Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
 		// Parcours le plateau
 		int ecartDominoI = 0;
 		int ecartDominoJ = 0;

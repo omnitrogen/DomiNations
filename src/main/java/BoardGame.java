@@ -3,6 +3,8 @@ import java.util.*;
 public class BoardGame {
 	
 	private int id;
+	private int gameBoardSize = 9;
+	private int maxSizeField = 5;
 	private HalfDomino.TerrainType[][] boardGame = new HalfDomino.TerrainType[9][9];
 	
 	public BoardGame(int id) {
@@ -55,22 +57,22 @@ public class BoardGame {
 		int ecartDominoI = 0;
 		int ecartDominoJ = 0;
 
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
+		for (int i = 0; i < gameBoardSize; i++) {
+			for (int j = 0; j < gameBoardSize; j++) {
 				if (boardGamePlayer[i][j] != null) {
 					// Obtient l ecart le plus grand entre les dominos selon i
-					for (int k = 9; k > i; k--)
+					for (int k = gameBoardSize; k > i; k--)
 						while (boardGamePlayer[k][j] == null)
 							ecartDominoI = k - i;
 
 					// Obtient l ecart le plus grand entre les dominos selon j
-					for (int l = 9; l > j; l--)
+					for (int l = gameBoardSize; l > j; l--)
 						while (boardGamePlayer[i][l] == null)
 							ecartDominoJ = l - j;
 				}
 			}
 		}
-		if (ecartDominoI <= 5 && ecartDominoJ <= 5) {
+		if (ecartDominoI <= maxSizeField && ecartDominoJ <= maxSizeField) {
 			return true;
 		}
 		return false;

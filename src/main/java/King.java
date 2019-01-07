@@ -13,5 +13,6 @@ public class King {
 
     public void setLocation(Domino location) {
         this.location_ = location;
+        location.setLinkedKing(this);
     }
 }

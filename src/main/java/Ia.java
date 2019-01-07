@@ -15,8 +15,8 @@ public class Ia extends Player(){
 	}
 
 	public boolean playIa(){
-		for(xLeft = 0; xLeft <= gameBoardSize; xLeft++){
-			for(yLeft = 0; yLeft <= gameBoardSize; yLeft++){
+		for(xLeft = 0; xLeft < gameBoardSize; xLeft++){
+			for(yLeft = 0; yLeft < gameBoardSize; yLeft++){
 				for(xRight = xLeft - 1; xRight <= xLeft + 1; xRight++){
 					for(yRight = xRight - 1; yRight <= xRight + 1; yRight++){
 						if(BoardGame.checkDominoWellPlaced(domino, xLeft, yLeft, xRight, yRight) == true){

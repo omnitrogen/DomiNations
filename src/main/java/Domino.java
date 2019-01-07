@@ -5,14 +5,14 @@ public class Domino {
     private int number_;
     private HalfDomino left_;
     private HalfDomino right_;
-    private boolean isUsed_;
+    private King linkedKing_;
 
     public Domino(String line) {
         String[] splitted_line = line.split(",");
         left_ = new HalfDomino(Integer.parseInt(splitted_line[0]), splitted_line[1]);
         right_ = new HalfDomino(Integer.parseInt(splitted_line[2]), splitted_line[3]);
         number_ = Integer.parseInt(splitted_line[4]);
-        isUsed_ = false;
+        linkedKing_ = null;
     }
 
     public int getNumber() {
@@ -31,12 +31,12 @@ public class Domino {
         return right_;
     }
 
-    public boolean isUsed() {
-        return isUsed_;
+    public King getLinkedKing() {
+        return linkedKing_;
     }
 
-    public void setUsed(boolean used) {
-        isUsed_ = used;
+    public void setLinkedKing(King king) {
+        linkedKing_ = king;
     }
 
     public static ArrayList<Domino> getDominosFromCSV() {

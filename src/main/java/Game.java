@@ -6,6 +6,8 @@ public class Game {
 
     private int numberOfPlayers;
     private ArrayList<Domino> deck;
+    private ArrayList<Domino> deckWithKings;
+    private ArrayList<Domino> turnDeck;
     private ArrayList<Player> playerList;
     private HashMap<Integer, Domino> selectionBoard;
     private ArrayList<King> kingList;
@@ -16,6 +18,8 @@ public class Game {
     public Game(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
         this.deck = Domino.getDominosFromCSV();
+        playerList = new ArrayList<>();
+
         for (int i = 0; i < numberOfPlayers; i++) {
             this.playerList.add(new Player(i + 1));
         }
@@ -28,48 +32,36 @@ public class Game {
                 this.kingList.add(new King(i));
             }
         }
-//        this.selectionBoard = ;
-    }
 
+        int amountToThrow = 0;
+        if (numberOfPlayers == 2)
+            amountToThrow = 24;
+        else if (numberOfPlayers == 3)
+            amountToThrow = 12;
 
-    /**
-     * Initialize a Game.
-     */
-    public void initGame() {
-
+        for (int i = 0; i < amountToThrow; ++i)
+        {
+            int index = rand.nextInt(deck.size());
+            deck.remove(index);
+        }
     }
 
     /**
      * Pick n random element from the deck and return them in an ArrayList
-     *
      * @param  n {@code int} the number of element to pick from the deck
-     * @param  deck {@code ArrayList} the deck from which to pick the elements
      * @return an ArrayList {@code ArrayList} with n elements picked randomly in the deck and delete them from the deck
      */
-    public ArrayList<Domino> pickNDominos(int n, ArrayList<Domino> deck) {
-        ArrayList<Domino> nDominos = new ArrayList<>();
+    public ArrayList<Domino> pickNDominos(int n) {
+        ArrayList<Domino> newDeck = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             int number = rand.nextInt(deck.size());
-            nDominos.add(deck.get(number));
+            newDeck.add(deck.get(number));
             deck.remove(number);
         }
-        return nDominos;
+        return newDeck;
     }
 
-
-//    public int[] chooseKingsOrder(ArrayList<King> kingList) {
-//        ArrayList<Domino> nDominos = new ArrayList<>();
-//        for (int i = 0; i < n; i++) {
-//            int number = rand.nextInt(deck.size());
-//            nDominos.add(deck.get(number));
-//            deck.remove(number);
-//        }
-//        return nDominos;
-//    }
-
-
-
-    public static void main(String[] args) {
-        // ...
+    public void pickDominosAtBeginningOfTurn() {
+        turnDeck = pickNDominos(kingList.size());
     }
 }

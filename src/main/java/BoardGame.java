@@ -10,7 +10,7 @@ public class BoardGame {
 		this.boardGame = getBoardGame();
 		this.boardGame[4][4] = HalfDomino.TerrainType.CASTLE;
 	}
-	
+
 	// Verifie que la case d a cote du domino n'est pas vide
 	// que ce terrain correspond au terrain de la moitie du domino qui est accole
 	// que les deux moities du domino sont sur des cases vides
@@ -52,23 +52,21 @@ public class BoardGame {
 	// Verifie que le plateau reste de la bonne dimension
 	public static boolean checkIfInBounds(HalfDomino.TerrainType[][] boardGamePlayer, Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
 		// Parcours le plateau
+		int ecartDominoI = 0;
+		int ecartDominoJ = 0;
+
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				if (boardGamePlayer[i][j] != null) {
 					// Obtient l ecart le plus grand entre les dominos selon i
-					int valIntermediaireI = i;
-					for (int i = 9; i > valIntermediaireI; i--) {
-						while (boardGamePlayer[i][j] == null) {
-							int ecartDominoI = i - valIntermediaireI;
-						}
-					}
+					for (int k = 9; k > i; k--)
+						while (boardGamePlayer[k][j] == null)
+							ecartDominoI = k - i;
+
 					// Obtient l ecart le plus grand entre les dominos selon j
-					int valeurIntermediaireJ = j;
-					for (int j = 9; j > valeurIntermediaireJ; j--) {
-						while (boardGamePlayer[i][j] == null) {
-							int ecartDominoJ = j - valeurIntermediaireJ;
-						}
-					}
+					for (int l = 9; l > j; l--)
+						while (boardGamePlayer[i][l] == null)
+							ecartDominoJ = l - j;
 				}
 			}
 		}
@@ -79,9 +77,5 @@ public class BoardGame {
 	}
 		
 	public HalfDomino.TerrainType[][] getBoardGame() { return this.boardGame; }
-
-//	public HalfDomino.TerrainType[][] setBoardGame(Domino domino, ) { 
-//		return this.boardGame; 
-//	}
 	
 }

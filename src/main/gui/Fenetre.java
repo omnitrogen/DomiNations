@@ -1,25 +1,28 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.*;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 
 public class Fenetre extends JFrame {
 
-    private Panneau pan = new Panneau();
-    // private Bouton bouton = new Bouton("Play");
-    private JButton bouton = new JButton("Play");
-    private JButton bouton2 = new JButton("Info");
+    // private Panneau pan = new Panneau();
+    private Bouton bouton = new Bouton("Play");
     private Integer[] nombreJoueursList = {2, 3, 4};
     private JComboBox<Integer> combo = new JComboBox<Integer>(nombreJoueursList);
     private JPanel container = new JPanel();
-    private JPanel containerBouton = new JPanel();
-    JLabel label = new JLabel("Mon deuxième JLabel");
+    private JPanel containerJoueursNom = new JPanel();
+    private JLabel label = new JLabel("DomiNations");
+    private JLabel label2 = new JLabel("Nombre de joueurs:");
 
-    private int compteur = 0;
+    private JTextField joueurUnNom = new JTextField();
+    private JLabel joueurUnLabel = new JLabel("Nom du joueur 1: ");
+    private JTextField joueurDeuxNom = new JTextField();
+    private JLabel joueurDeuxLabel = new JLabel("Nom du joueur 2: ");
+    private JTextField joueurTroisNom = new JTextField();
+    private JLabel joueurTroisLabel = new JLabel("Nom du joueur 3: ");
+    private JTextField joueurQuatreNom = new JTextField();
+    private JLabel joueurQuatreLabel = new JLabel("Nom du joueur 4: ");
+
 
     public Fenetre(){
         this.setTitle("DomiNations");
@@ -35,22 +38,95 @@ public class Fenetre extends JFrame {
 
         JLabel nombreJoueursLabel = new JLabel("Choisissez le nombre de joueurs: ");
 
-        combo.setPreferredSize(new Dimension(100, 20));
-
-        containerBouton.setBackground(Color.white);
-        containerBouton.add(nombreJoueursLabel);
-        containerBouton.add(combo);
-        containerBouton.add(bouton);
-        containerBouton.add(bouton2);
+        combo.setPreferredSize(new Dimension(100, 30));
+        combo.addActionListener(new ItemAction());
 
         container.setBackground(Color.white);
-        container.setLayout(new BorderLayout());
-        container.add(pan, BorderLayout.CENTER);
-        container.add(label, BorderLayout.NORTH);
-        container.add(containerBouton, BorderLayout.SOUTH);
+
+        GridBagLayout containerLayout = new GridBagLayout();
+        GridBagLayout containerJoueursNomLayout = new GridBagLayout();
+
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        container.setLayout(containerLayout);
+        containerJoueursNom.setLayout(containerJoueursNomLayout);
+
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        containerJoueursNomLayout.setConstraints(joueurUnLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        containerJoueursNomLayout.setConstraints(joueurUnNom, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        containerJoueursNomLayout.setConstraints(joueurDeuxLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        containerJoueursNomLayout.setConstraints(joueurDeuxNom, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        containerJoueursNomLayout.setConstraints(joueurTroisLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        containerJoueursNomLayout.setConstraints(joueurTroisNom, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.NONE;
+        containerJoueursNomLayout.setConstraints(joueurQuatreLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        containerJoueursNomLayout.setConstraints(joueurQuatreNom, gbc);
+        gbc.fill = GridBagConstraints.NONE;
+
+        containerJoueursNom.add(joueurUnLabel);
+        containerJoueursNom.add(joueurUnNom);
+        containerJoueursNom.add(joueurDeuxLabel);
+        containerJoueursNom.add(joueurDeuxNom);
+        containerJoueursNom.add(joueurTroisLabel);
+        containerJoueursNom.add(joueurTroisNom);
+        containerJoueursNom.add(joueurQuatreLabel);
+        containerJoueursNom.add(joueurQuatreNom);
+
+        joueurTroisLabel.setVisible(false);
+        joueurTroisNom.setVisible(false);
+        joueurQuatreLabel.setVisible(false);
+        joueurQuatreNom.setVisible(false);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        containerLayout.setConstraints(label, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        containerLayout.setConstraints(label2, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        containerLayout.setConstraints(combo, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        containerLayout.setConstraints(containerJoueursNom, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.NONE;
+        containerLayout.setConstraints(bouton, gbc);
+
+        container.add(label);
+        container.add(label2);
+        container.add(combo);
+        container.add(containerJoueursNom);
+        container.add(bouton);
 
         bouton.addActionListener(new BoutonListener());
-        bouton2.addActionListener(new Bouton2Listener());
 
         this.setContentPane(container);
 
@@ -60,15 +136,25 @@ public class Fenetre extends JFrame {
     class BoutonListener implements ActionListener{
         //Redéfinition de la méthode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-            label.setText("Vous avez cliqué sur le bouton 1");
+            // label.setText("Vous avez cliqué sur le bouton 1");
         }
     }
 
-    //Classe écoutant notre second bouton
-    class Bouton2Listener implements ActionListener{
-        //Redéfinition de la méthode actionPerformed()
+    class ItemAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            label.setText("Vous avez cliqué sur le bouton 2");
+            if ((Integer)combo.getSelectedItem() == 3) {
+                joueurTroisLabel.setVisible(true);
+                joueurTroisNom.setVisible(true);
+            } else if ((Integer)combo.getSelectedItem() == 4) {
+                joueurQuatreLabel.setVisible(true);
+                joueurQuatreNom.setVisible(true);
+            } else {
+                joueurTroisLabel.setVisible(false);
+                joueurTroisNom.setVisible(false);
+                joueurQuatreLabel.setVisible(false);
+                joueurQuatreNom.setVisible(false);
+            }
         }
     }
+
 }

@@ -1,6 +1,7 @@
 import java.awt.*;
 
 public class HalfDomino {
+    private int parentNumber_;
     private int nbCrowns_;
     private TerrainType terrain_;
 
@@ -8,6 +9,14 @@ public class HalfDomino {
     {
         nbCrowns_ = nbCrowns;
         terrain_ = TerrainType.fromName(type);
+    }
+    
+    public int getParentNumber() {
+        return parentNumber_;
+    }
+    
+    public void setParentNumber(int parentNumber) {
+        parentNumber_ = parentNumber;
     }
 
     public int getNbCrowns() {

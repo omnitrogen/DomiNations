@@ -2,7 +2,7 @@ import java.util.*;
 import java.awt.Color;
 import java.util.Random;
 
-public class Ia extends Player(){
+public class Ia extends@ Player() {
 	
 	private int xLeft;
 	private int xRight;
@@ -19,7 +19,7 @@ public class Ia extends Player(){
 		super(number);
 	}
 
-	public void playIa(){
+	public void playIa(Domino domino) {
 		for(xLeft = 0; xLeft < gameBoardSize; xLeft++){
 			for(yLeft = 0; yLeft < gameBoardSize; yLeft++){
 				for(xRight = xLeft - 1; xRight <= xLeft + 1; xRight++){

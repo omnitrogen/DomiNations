@@ -9,6 +9,7 @@ public class Player {
     public Player(int number) {
         number_ = number;
         score_ = 0;
+        BoardGame boardGamePlayer = new BoardGame(number);
 
         Random rand = new Random();
         int r = rand.nextInt(255);
@@ -31,5 +32,9 @@ public class Player {
 
     public int getNumber() {
         return number_;
+    }
+    
+    public void calculatePlayerScore() {
+    	
     }
 }

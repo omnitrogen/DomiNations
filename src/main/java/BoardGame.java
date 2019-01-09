@@ -18,7 +18,7 @@ public class BoardGame {
 	// que les deux moities du domino sont sur des cases vides
 	// que le plateau reste de la bonne dimension
 	
-	public boolean checkDominoWellPlaced(Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
+	public static boolean checkDominoWellPlaced(Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
 		
 		HalfDomino.TerrainType[][] boardGamePlayer = this.getBoardGame();
 		

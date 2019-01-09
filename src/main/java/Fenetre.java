@@ -146,7 +146,11 @@ public class Fenetre extends JFrame {
             if ((Integer)combo.getSelectedItem() == 3) {
                 joueurTroisLabel.setVisible(true);
                 joueurTroisNom.setVisible(true);
+                joueurQuatreLabel.setVisible(false);
+                joueurQuatreNom.setVisible(false);
             } else if ((Integer)combo.getSelectedItem() == 4) {
+                joueurTroisLabel.setVisible(true);
+                joueurTroisNom.setVisible(true);
                 joueurQuatreLabel.setVisible(true);
                 joueurQuatreNom.setVisible(true);
             } else {

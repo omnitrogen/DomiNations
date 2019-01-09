@@ -3,13 +3,12 @@ import java.util.*;
 public class BoardGame {
 	
 	private int id;
-	private int gameBoardSize = 9;
+	public static int gameBoardSize = 9;
 	private int maxSizeField = 5;
 	private HalfDomino[][] boardGame = new HalfDomino[9][9];
 	
 	public BoardGame(int id) {
 		this.id = id;
-		this.boardGame = boardGame;
 		HalfDomino Castle = new HalfDomino(0, "Chateau");
 		this.boardGame[4][4] = Castle;
 	}
@@ -91,5 +90,9 @@ public class BoardGame {
 			return true;
 		}
 		return false;
-	}	
+	}
+	
+	public HalfDomino[][] getBoardGame() {
+		return this.boardGame;
+	}
 }

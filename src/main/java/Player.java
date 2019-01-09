@@ -5,11 +5,12 @@ public class Player {
     private int number_;
     private int score_;
     private Color color_;
+    private BoardGame boardGamePlayer_;
 
     public Player(int number) {
         number_ = number;
         score_ = 0;
-        BoardGame boardGamePlayer = new BoardGame(number);
+        boardGamePlayer_ = new BoardGame(number);
 
         Random rand = new Random();
         int r = rand.nextInt(255);
@@ -34,7 +35,14 @@ public class Player {
         return number_;
     }
     
-    public void calculatePlayerScore() {
-    	
+    public void calculatePlayerScore(int id) {
+    	for (int i = 0; i < BoardGame.gameBoardSize; i++) {
+			for (int j = 0; j < BoardGame.gameBoardSize; j++) {
+				HalfDomino[][] boardGame = boardGamePlayer_.getBoardGame();
+				if (boardGame[i][j].getTerrain() == HalfDomino.TerrainType.FIELDS) {
+					
+				}
+			}
+    	}
     }
 }

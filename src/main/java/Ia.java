@@ -8,7 +8,6 @@ public class Ia extends@ Player() {
 	private int xRight;
 	private int yLeft;
 	private int yRight;
-	private int gameBoardSize = 9;
 	private int score = 0;
 	int idealPositionXLeft;
 	int idealPositionYLeft;
@@ -20,8 +19,8 @@ public class Ia extends@ Player() {
 	}
 
 	public void playIa(Domino domino) {
-		for(xLeft = 0; xLeft < gameBoardSize; xLeft++){
-			for(yLeft = 0; yLeft < gameBoardSize; yLeft++){
+		for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
+			for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
 				for(xRight = xLeft - 1; xRight <= xLeft + 1; xRight++){
 					for(yRight = xRight - 1; yRight <= xRight + 1; yRight++){
 						if(BoardGame.checkDominoWellPlaced(domino, xLeft, yLeft, xRight, yRight) == true){

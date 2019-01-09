@@ -13,6 +13,9 @@ public class Domino {
         right_ = new HalfDomino(Integer.parseInt(splitted_line[2]), splitted_line[3]);
         number_ = Integer.parseInt(splitted_line[4]);
         linkedKing_ = null;
+        
+        left_.setParentNumber(number_);
+        right_.setParentNumber(number_);
     }
 
     public int getNumber() {

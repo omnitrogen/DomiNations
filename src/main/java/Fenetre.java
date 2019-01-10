@@ -1,10 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.*;
 import java.awt.event.*;
 
 
 public class Fenetre extends JFrame {
+
+    DeckPanel deck = new DeckPanel(3);
 
     // private Panneau pan = new Panneau();
     private Bouton bouton = new Bouton("Play");
@@ -120,12 +121,17 @@ public class Fenetre extends JFrame {
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.NONE;
         containerLayout.setConstraints(bouton, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.NONE;
+        containerLayout.setConstraints(deck, gbc);
 
         container.add(label);
         container.add(label2);
         container.add(combo);
         container.add(containerJoueursNom);
         container.add(bouton);
+        container.add(deck);
 
         bouton.addActionListener(new BoutonListener());
 

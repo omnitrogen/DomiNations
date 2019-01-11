@@ -31,7 +31,8 @@ public class ConsolePanel extends JPanel {
     }
 
     public void log(String string) {
-        console.append("\n");
+        if (!console.getText().isEmpty())
+            console.append("\n");
         console.append(string);
         console.update(console.getGraphics());
     }

@@ -9,7 +9,7 @@ public class GameWindow {
     private BoardGameWindow boardGameWindow;
 
     //FIXME: Change BoardGameWindow with DominoDeckWindow (or equivalent class)
-    private BoardGameWindow dominoDeckWindow;
+    private JLabel dominoDeckWindow;
 
     private ConsolePanel consoleWindow;
 
@@ -26,14 +26,14 @@ public class GameWindow {
         boardGameWindow = new BoardGameWindow();
 
         //FIXME: Change with corresponding constructors
-        dominoDeckWindow = new BoardGameWindow();
+        dominoDeckWindow = new JLabel("coucou");
         
         consoleWindow = new ConsolePanel();
 
         boardAndDeckContainer = new JPanel();
         boardAndDeckContainer.setLayout(new GridLayout(1, 2));
         boardAndDeckContainer.add(boardGameWindow.getBoardsFrame());
-        boardAndDeckContainer.add(dominoDeckWindow.getBoardsFrame());
+        boardAndDeckContainer.add(dominoDeckWindow);
 
         window.setLayout(new BorderLayout());
         window.add(boardAndDeckContainer, BorderLayout.CENTER);

@@ -4,7 +4,7 @@ public class BoardGame {
 	
 	private int id;
 	public static int gameBoardSize = 9;
-	private int maxSizeField = 5;
+	private static int maxSizeField = 5;
 	private HalfDomino[][] boardGame = new HalfDomino[9][9];
 	
 	public BoardGame(int id) {
@@ -18,7 +18,7 @@ public class BoardGame {
 	// que les deux moities du domino sont sur des cases vides
 	// que le plateau reste de la bonne dimension
 	
-	public boolean checkDominoWellPlaced(HalfDomino[][] boardGame, Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
+	public static boolean checkDominoWellPlaced(HalfDomino[][] boardGame, Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
 		
 		try {
 			if (boardGame[xLeft][yLeft - 1] != null && (domino.getLeft().getTerrain() == boardGame[xLeft][yLeft - 1].getTerrain() || boardGame[xLeft][yLeft - 1].getTerrain() == HalfDomino.TerrainType.CASTLE) && boardGame[xLeft][yLeft] == null && boardGame[xRight][yRight] == null && checkIfInBounds(boardGame, domino, xLeft, yLeft, xRight, yRight) == true) {
@@ -71,7 +71,7 @@ public class BoardGame {
 	}
 		
 	// Verifie que le plateau reste de la bonne dimension
-	public boolean checkIfInBounds(HalfDomino boardGame[][], Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
+	public static boolean checkIfInBounds(HalfDomino boardGame[][], Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
 		// Parcours le plateau
 		int ecartDominoI = 0;
 		int ecartDominoJ = 0;

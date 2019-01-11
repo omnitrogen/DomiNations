@@ -2,42 +2,84 @@ import java.util.*;
 import java.awt.Color;
 import java.util.Random;
 
-public class Ia extends@ Player() {
-	
+public class Ia extends Player {
+
 	private int xLeft;
 	private int xRight;
 	private int yLeft;
 	private int yRight;
-	private int score = 0;
-	int idealPositionXLeft;
-	int idealPositionYLeft;
-	int idealPositionXRight;
-	int idealPositionYRight;
+	private int score;
+	private int idealPositionXLeft;
+	private int idealPositionYLeft;
+	private int idealPositionXRight;
+	private int idealPositionYRight;
+	private HalfDomino.TerrainType xLeftTerrain;
+	private HalfDomino.TerrainType xRightTerrain;
+	private HalfDomino.TerrainType yLeftTerrain;
+	private HalfDomino.TerrainType yRightTerrain;
 	
 	public Ia(int number) {
 		super(number);
 	}
-
+	
 	public void playIa(Domino domino) {
-		for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
-			for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
-				for(xRight = xLeft - 1; xRight <= xLeft + 1; xRight++){
-					for(yRight = xRight - 1; yRight <= xRight + 1; yRight++){
-						if(BoardGame.checkDominoWellPlaced(domino, xLeft, yLeft, xRight, yRight) == true){
-							if (getScore() > score) {
+		HalfDomino[][] boardGame = boardGamePlayer_.getBoardGame();
+		score = 0;
+		
+		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
+			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
+				xRight = xLeft - 1;
+				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
+					calculatePlayerScore(number_);
+					if (score_ > score) {
+						idealPositionXLeft = xLeft;
+						idealPositionYLeft = yLeft;
+						idealPositionXRight = xRight;
+						idealPositionYRight = yRight;
+					}
+					else if(score_ == score) {
+						try {
+							xLeftTerrain = boardGame[xRight - 1][yRight].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrain = null;
+						}
+						try {
+							xRightTerrain = boardGame[xRight + 1][yRight].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrain = null;
+						}
+						try {
+							yLeftTerrain = boardGame[xRight][yRight - 1].getTerrain();
+						}
+						catch (Exception e) {
+							yLeftTerrain = null;
+						}
+						try {
+							yRightTerrain = boardGame[xRight][yRight + 1].getTerrain();
+						}
+						catch (Exception e) {
+							yRightTerrain = null;
+						}						
+						
+						if ((domino.getLeft().getTerrain() ==   && domino.getLeft().getTerrain() == boardGame[xLeft + 1][yLeft].getTerrain()) || (domino.getRight().getTerrain() == boardGame[xRight][yRight + 1].getTerrain() && domino.getLeft().getTerrain() == boardGame[xLeft][yLeft + 1].getTerrain()) || (domino.getRight().getTerrain() == boardGame[xRight - 1][yRight].getTerrain() && domino.getLeft().getTerrain() == boardGame[xLeft - 1][yLeft].getTerrain()) || (domino.getRight().getTerrain() == boardGame[xRight][yRight - 1].getTerrain() && domino.getLeft().getTerrain() == boardGame[xLeft][yLeft - 1].getTerrain())) {
+							idealPositionXLeft = xLeft;
+							idealPositionYLeft = yLeft;
+							idealPositionXRight = xRight;
+							idealPositionYRight = yRight;
+						}
+					}
+					
+					for(yRight = yLeft + 1; yRight < yRight; yRight++){
+						if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
+							if (score_ > score) {
 								idealPositionXLeft = xLeft;
 								idealPositionYLeft = yLeft;
 								idealPositionXRight = xRight;
 								idealPositionYRight = yRight;
 							}
-							else if((getScore() = score) {
-								if ((domino.getRight().getTerrain() == boardGamePlayer[xRight + 1][yRight] && domino.getLeft().getTerrain() == boardGamePlayer[xLeft + 1][yLeft]) || (domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight + 1] && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft + 1]) || (domino.getRight().getTerrain() == boardGamePlayer[xRight - 1][yRight] && domino.getLeft().getTerrain() == boardGamePlayer[xLeft - 1][yLeft]) || (domino.getRight().getTerrain() == boardGamePlayer[xRight][yRight - 1] && domino.getLeft().getTerrain() == boardGamePlayer[xLeft][yLeft - 1])) {
-									idealPositionXLeft = xLeft;
-									idealPositionYLeft = yLeft;
-									idealPositionXRight = xRight;
-									idealPositionYRight = yRight;
-								}
-							}
+							
 						}
 						else {
 							// Defausse le domino
@@ -45,6 +87,6 @@ public class Ia extends@ Player() {
 					}
 				}
 			}
-		}
+		}	
 	}
 }

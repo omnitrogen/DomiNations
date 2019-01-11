@@ -2,10 +2,10 @@ import java.awt.Color;
 import java.util.Random;
 
 public class Player {
-    private int number_;
-    private int score_;
+    protected int number_;
+    protected int score_;
     private Color color_;
-    private BoardGame boardGamePlayer_;
+    protected BoardGame boardGamePlayer_;
     private boolean[][] verificationBoardGame_;
     private int fieldsCrown;
     private int forestCrown;
@@ -60,42 +60,42 @@ public class Player {
     	for (int i = 0; i < BoardGame.gameBoardSize; i++) {
 			for (int j = 0; j < BoardGame.gameBoardSize; j++) {
 				HalfDomino[][] boardGame = boardGamePlayer_.getBoardGame();
-				if (verificationBoardGame_[i][j] = false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.FIELDS) {
+				if (verificationBoardGame_[i][j] == false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.FIELDS) {
 					verificationBoardGame_[i][j] = true;
 					numberFields = 1;
 					fieldsCrown = fieldsCrown + boardGame[i][j].getNbCrowns();
 					verifyIfNeighbourFields(i, j, boardGame, verificationBoardGame_);
 					score_ = score_ + (numberFields * fieldsCrown);					
 				}
-				else if (verificationBoardGame_[i][j] = false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.FOREST) {
+				else if (verificationBoardGame_[i][j] == false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.FOREST) {
 					verificationBoardGame_[i][j] = true;
 					numberForest = 1;
 					forestCrown = forestCrown + boardGame[i][j].getNbCrowns();
 					verifyIfNeighbourForest(i, j, boardGame, verificationBoardGame_);
 					score_ = score_ + (numberForest * forestCrown);					
 				}
-				else if (verificationBoardGame_[i][j] = false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.MEADOW) {
+				else if (verificationBoardGame_[i][j] == false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.MEADOW) {
 					verificationBoardGame_[i][j] = true;
 					numberMeadow = 1;
 					meadowCrown = meadowCrown + boardGame[i][j].getNbCrowns();
 					verifyIfNeighbourMeadow(i, j, boardGame, verificationBoardGame_);
 					score_ = score_ + (numberMeadow * meadowCrown);					
 				}
-				else if (verificationBoardGame_[i][j] = false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.MINE) {
+				else if (verificationBoardGame_[i][j] == false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.MINE) {
 					verificationBoardGame_[i][j] = true;
 					numberMine = 1;
 					mineCrown = mineCrown + boardGame[i][j].getNbCrowns();
 					verifyIfNeighbourMine(i, j, boardGame, verificationBoardGame_);
 					score_ = score_ + (numberMine * mineCrown);					
 				}
-				else if (verificationBoardGame_[i][j] = false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.MOUNTAIN) {
+				else if (verificationBoardGame_[i][j] == false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.MOUNTAIN) {
 					verificationBoardGame_[i][j] = true;
 					numberMountain = 1;
 					mountainCrown = mountainCrown + boardGame[i][j].getNbCrowns();
 					verifyIfNeighbourMountain(i, j, boardGame, verificationBoardGame_);
 					score_ = score_ + (numberMountain * mountainCrown);					
 				}
-				else if (verificationBoardGame_[i][j] = false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.SEA) {
+				else if (verificationBoardGame_[i][j] == false && boardGame[i][j].getTerrain() == HalfDomino.TerrainType.SEA) {
 					verificationBoardGame_[i][j] = true;
 					numberSea = 1;
 					seaCrown = seaCrown + boardGame[i][j].getNbCrowns();

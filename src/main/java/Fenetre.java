@@ -144,6 +144,12 @@ public class Fenetre extends JFrame {
         //Redéfinition de la méthode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
             // label.setText("Vous avez cliqué sur le bouton 1");
+            System.out.print(joueurUnNom.getText() + joueurDeuxNom.getText());
+            if ((Integer)combo.getSelectedItem() >= 3) {
+                System.out.print(joueurTroisNom.getText());
+            } if ((Integer)combo.getSelectedItem() == 4) {
+                System.out.print(joueurQuatreNom.getText());
+            }
         }
     }
 

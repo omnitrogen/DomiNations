@@ -1,6 +1,4 @@
 import java.awt.Color;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Random;
 
 public class Player {

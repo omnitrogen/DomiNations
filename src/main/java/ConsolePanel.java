@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class ConsolePanel extends JPanel {
     private JPanel consoleFrame;

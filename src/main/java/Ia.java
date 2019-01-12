@@ -13,10 +13,14 @@ public class Ia extends Player {
 	private int idealPositionYLeft;
 	private int idealPositionXRight;
 	private int idealPositionYRight;
-	private HalfDomino.TerrainType xLeftTerrain;
-	private HalfDomino.TerrainType xRightTerrain;
-	private HalfDomino.TerrainType yLeftTerrain;
-	private HalfDomino.TerrainType yRightTerrain;
+	private HalfDomino.TerrainType xLeftTerrainUp;
+	private HalfDomino.TerrainType xLeftTerrainLeft;
+	private HalfDomino.TerrainType xLeftTerrainRight;
+	private HalfDomino.TerrainType xLeftTerrainBelow;
+	private HalfDomino.TerrainType xRightTerrainUp;
+	private HalfDomino.TerrainType xRightTerrainLeft;
+	private HalfDomino.TerrainType xRightTerrainRight;
+	private HalfDomino.TerrainType xRightTerrainBelow;
 	
 	public Ia(int number) {
 		super(number);
@@ -28,7 +32,9 @@ public class Ia extends Player {
 		
 		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
 			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
-				xRight = xLeft - 1;
+				
+				xRight = xLeft + 1;
+				yRight = yLeft;
 				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
 					calculatePlayerScore(number_);
 					if (score_ > score) {
@@ -39,50 +45,242 @@ public class Ia extends Player {
 					}
 					else if(score_ == score) {
 						try {
-							xLeftTerrain = boardGame[xRight - 1][yRight].getTerrain();
+							xLeftTerrainUp = boardGame[xLeft][yLeft + 1].getTerrain();
 						}
 						catch (Exception e) {
-							xLeftTerrain = null;
+							xLeftTerrainUp = null;
 						}
 						try {
-							xRightTerrain = boardGame[xRight + 1][yRight].getTerrain();
+							xLeftTerrainLeft = boardGame[xLeft - 1][yLeft].getTerrain();
 						}
 						catch (Exception e) {
-							xRightTerrain = null;
+							xLeftTerrainLeft = null;
 						}
 						try {
-							yLeftTerrain = boardGame[xRight][yRight - 1].getTerrain();
+							xLeftTerrainBelow = boardGame[xLeft][yLeft - 1].getTerrain();
 						}
 						catch (Exception e) {
-							yLeftTerrain = null;
+							xLeftTerrainBelow = null;
+						}
+					
+						try {
+							xRightTerrainUp = boardGame[xRight][yRight + 1].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainUp = null;
 						}
 						try {
-							yRightTerrain = boardGame[xRight][yRight + 1].getTerrain();
+							xRightTerrainRight = boardGame[xRight + 1][yRight].getTerrain();
 						}
 						catch (Exception e) {
-							yRightTerrain = null;
-						}						
+							xRightTerrainRight = null;
+						}
+						try {
+							xRightTerrainBelow = boardGame[xRight][yRight - 1].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainBelow = null;
+						}
+					}						
 						
-						if ((domino.getLeft().getTerrain() ==   && domino.getLeft().getTerrain() == boardGame[xLeft + 1][yLeft].getTerrain()) || (domino.getRight().getTerrain() == boardGame[xRight][yRight + 1].getTerrain() && domino.getLeft().getTerrain() == boardGame[xLeft][yLeft + 1].getTerrain()) || (domino.getRight().getTerrain() == boardGame[xRight - 1][yRight].getTerrain() && domino.getLeft().getTerrain() == boardGame[xLeft - 1][yLeft].getTerrain()) || (domino.getRight().getTerrain() == boardGame[xRight][yRight - 1].getTerrain() && domino.getLeft().getTerrain() == boardGame[xLeft][yLeft - 1].getTerrain())) {
+					if (((xLeftTerrainUp == domino.getLeft().getTerrain()) || (xLeftTerrainLeft == domino.getLeft().getTerrain()) || (xLeftTerrainBelow == domino.getLeft().getTerrain())) && ((xRightTerrainUp == domino.getRight().getTerrain()) || (xRightTerrainRight == domino.getRight().getTerrain()) || (xRightTerrainBelow == domino.getRight().getTerrain()))) {
+						idealPositionXLeft = xLeft;
+						idealPositionYLeft = yLeft;
+						idealPositionXRight = xRight;
+						idealPositionYRight = yRight;
+					}
+				}
+			}
+		}
+		
+		// xLeft - 1
+		
+		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
+			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
+				xRight = xLeft - 1;
+				yRight = yLeft;
+				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
+					calculatePlayerScore(number_);
+					if (score_ > score) {
+						idealPositionXLeft = xLeft;
+						idealPositionYLeft = yLeft;
+						idealPositionXRight = xRight;
+						idealPositionYRight = yRight;
+					}
+					else if(score_ == score) {
+						try {
+							xLeftTerrainUp = boardGame[xLeft][yLeft + 1].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainUp = null;
+						}
+						try {
+							xLeftTerrainRight = boardGame[xLeft + 1][yLeft].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainRight = null;
+						}
+						try {
+							xLeftTerrainBelow = boardGame[xLeft][yLeft - 1].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainBelow = null;
+						}
+					
+						try {
+							xRightTerrainUp = boardGame[xRight][yRight + 1].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainUp = null;
+						}
+						try {
+							xRightTerrainLeft = boardGame[xRight - 1][yRight].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainLeft = null;
+						}
+						try {
+							xRightTerrainBelow = boardGame[xRight][yRight - 1].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainBelow = null;
+						}
+						
+						if (((xLeftTerrainUp == domino.getLeft().getTerrain()) || (xLeftTerrainRight == domino.getLeft().getTerrain()) || (xLeftTerrainBelow == domino.getLeft().getTerrain())) && ((xRightTerrainUp == domino.getRight().getTerrain()) || (xRightTerrainLeft == domino.getRight().getTerrain()) || (xRightTerrainBelow == domino.getRight().getTerrain()))) {
 							idealPositionXLeft = xLeft;
 							idealPositionYLeft = yLeft;
 							idealPositionXRight = xRight;
 							idealPositionYRight = yRight;
 						}
 					}
-					
-					for(yRight = yLeft + 1; yRight < yRight; yRight++){
-						if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
-							if (score_ > score) {
-								idealPositionXLeft = xLeft;
-								idealPositionYLeft = yLeft;
-								idealPositionXRight = xRight;
-								idealPositionYRight = yRight;
-							}
+				}
+			}
+		}
+						
 							
+		// yLeft + 1
+		
+		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
+			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
+				xRight = xLeft;
+				yRight = yLeft + 1;
+				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
+					calculatePlayerScore(number_);
+					if (score_ > score) {
+						idealPositionXLeft = xLeft;
+						idealPositionYLeft = yLeft;
+						idealPositionXRight = xRight;
+						idealPositionYRight = yRight;
+					}
+					else if(score_ == score) {
+						try {
+							xLeftTerrainLeft = boardGame[xLeft - 1][yLeft].getTerrain();
 						}
-						else {
-							// Defausse le domino
+						catch (Exception e) {
+							xLeftTerrainLeft = null;
+						}
+						try {
+							xLeftTerrainRight = boardGame[xLeft + 1][yLeft].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainRight = null;
+						}
+						try {
+							xLeftTerrainBelow = boardGame[xLeft][yLeft - 1].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainBelow = null;
+						}
+					
+						try {
+							xRightTerrainUp = boardGame[xRight][yRight + 1].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainUp = null;
+						}
+						try {
+							xRightTerrainLeft = boardGame[xRight - 1][yRight].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainLeft = null;
+						}
+						try {
+							xRightTerrainRight = boardGame[xRight + 1][yRight].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainRight = null;
+						}	
+							
+						if (((xLeftTerrainLeft == domino.getLeft().getTerrain()) || (xLeftTerrainRight == domino.getLeft().getTerrain()) || (xLeftTerrainBelow == domino.getLeft().getTerrain())) && ((xRightTerrainUp == domino.getRight().getTerrain()) || (xRightTerrainLeft == domino.getRight().getTerrain()) || (xRightTerrainRight == domino.getRight().getTerrain()))) {
+							idealPositionXLeft = xLeft;
+							idealPositionYLeft = yLeft;
+							idealPositionXRight = xRight;
+							idealPositionYRight = yRight;
+						}
+					}
+				}
+			}
+		}
+						
+								
+		// yRight = yLeft - 1
+		
+		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
+			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
+				xRight = xLeft;
+				yRight = yLeft - 1;
+				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
+					calculatePlayerScore(number_);
+					if (score_ > score) {
+						idealPositionXLeft = xLeft;
+						idealPositionYLeft = yLeft;
+						idealPositionXRight = xRight;
+						idealPositionYRight = yRight;
+					}
+					else if(score_ == score) {
+						try {
+							xLeftTerrainUp = boardGame[xLeft][yLeft + 1].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainUp = null;
+						}
+						try {
+							xLeftTerrainLeft = boardGame[xLeft - 1][yLeft].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainLeft = null;
+						}
+						try {
+							xLeftTerrainRight = boardGame[xLeft + 1][yLeft].getTerrain();
+						}
+						catch (Exception e) {
+							xLeftTerrainRight = null;
+						}
+					
+						try {
+							xRightTerrainLeft = boardGame[xRight - 1][yRight].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainLeft = null;
+						}
+						try {
+							xRightTerrainRight = boardGame[xRight + 1][yRight].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainRight = null;
+						}
+						try {
+							xRightTerrainBelow = boardGame[xRight][yRight - 1].getTerrain();
+						}
+						catch (Exception e) {
+							xRightTerrainBelow = null;
+						}									
+							
+						if (((xLeftTerrainUp == domino.getLeft().getTerrain()) || (xLeftTerrainLeft == domino.getLeft().getTerrain()) || (xLeftTerrainRight == domino.getLeft().getTerrain())) && ((xRightTerrainLeft == domino.getRight().getTerrain()) || (xRightTerrainRight == domino.getRight().getTerrain()) || (xRightTerrainBelow == domino.getRight().getTerrain()))) {
+							idealPositionXLeft = xLeft;
+							idealPositionYLeft = yLeft;
+							idealPositionXRight = xRight;
+							idealPositionYRight = yRight;
 						}
 					}
 				}

@@ -11,9 +11,10 @@ public class Fenetre extends JFrame {
     private Integer[] nombreJoueursList = {2, 3, 4};
     private JComboBox<Integer> combo = new JComboBox<Integer>(nombreJoueursList);
     private JPanel container = new JPanel();
+    private JPanel containerSelectNumber = new JPanel();
     private JPanel containerJoueursNom = new JPanel();
     private JLabel label = new JLabel("DomiNations");
-    private JLabel label2 = new JLabel("Nombre de joueurs:");
+    private JLabel label2 = new JLabel("Choisissez le nombre de joueurs:");
 
     private JTextField joueurUnNom = new JTextField();
     private JLabel joueurUnLabel = new JLabel("Nom du joueur 1: ");
@@ -37,25 +38,39 @@ public class Fenetre extends JFrame {
         label.setForeground(Color.blue);
         label.setHorizontalAlignment(JLabel.CENTER);
 
-        JLabel nombreJoueursLabel = new JLabel("Choisissez le nombre de joueurs: ");
-
         combo.setPreferredSize(new Dimension(100, 30));
         combo.addActionListener(new ItemAction());
 
         container.setBackground(Color.white);
+        containerSelectNumber.setBackground(Color.white);
+        containerJoueursNom.setBackground(Color.white);
 
         GridBagLayout containerLayout = new GridBagLayout();
+        GridBagLayout containerSelectNumberLayout = new GridBagLayout();
         GridBagLayout containerJoueursNomLayout = new GridBagLayout();
 
         GridBagConstraints gbc = new GridBagConstraints();
 
         container.setLayout(containerLayout);
+        containerSelectNumber.setLayout(containerSelectNumberLayout);
         containerJoueursNom.setLayout(containerJoueursNomLayout);
 
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 1;
         gbc.weighty = 1;
 
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.ipadx = 20;
+        containerSelectNumberLayout.setConstraints(label2, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        containerSelectNumberLayout.setConstraints(combo, gbc);
+
+        containerSelectNumber.add(label2);
+        containerSelectNumber.add(combo);
+
+        gbc.ipadx = 0;
         gbc.gridx = 0;
         gbc.gridy = 0;
         containerJoueursNomLayout.setConstraints(joueurUnLabel, gbc);
@@ -108,26 +123,22 @@ public class Fenetre extends JFrame {
         containerLayout.setConstraints(label, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        containerLayout.setConstraints(label2, gbc);
+        containerLayout.setConstraints(containerSelectNumber, gbc);
         gbc.gridx = 0;
         gbc.gridy = 2;
-        containerLayout.setConstraints(combo, gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.BOTH;
         containerLayout.setConstraints(containerJoueursNom, gbc);
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.NONE;
         containerLayout.setConstraints(bouton, gbc);
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.NONE;
         //containerLayout.setConstraints(deck, gbc);
 
         container.add(label);
-        container.add(label2);
-        container.add(combo);
+        container.add(containerSelectNumber);
         container.add(containerJoueursNom);
         container.add(bouton);
         //container.add(deck);
@@ -151,10 +162,6 @@ public class Fenetre extends JFrame {
 
             if ((Integer)combo.getSelectedItem() == 4)
                 playerNames.add((joueurQuatreNom.getText().isEmpty()) ? "Joueur 4" : joueurQuatreNom.getText());
-
-            Game game = new Game(playerNames);
-
-            GameWindow window = new GameWindow(game);
 
             fenetre.setVisible(false);
             fenetre.dispose();

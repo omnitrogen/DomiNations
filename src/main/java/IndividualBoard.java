@@ -9,12 +9,15 @@ import java.io.File;
 public class IndividualBoard extends JPanel implements MouseListener {
     private JPanel boardFrame;
     private ConsolePanel console;
+    private Player owner;
 
     public IndividualBoard(Player player) {
         initialize(player);
     }
 
     private void initialize(Player player) {
+        owner = player;
+
         int sizeX = 9;
         int sizeY = 9;
 
@@ -27,7 +30,12 @@ public class IndividualBoard extends JPanel implements MouseListener {
             {
                 JLabel label = new JLabel();
                 label.setVisible(true);
-                label.setBorder(BorderFactory.createLineBorder(player.getColor()));
+                if (i == sizeX / 2 && j == sizeY / 2) {
+                    label.setBackground(player.getColor());
+                    label.setOpaque(true);
+                }
+                else
+                    label.setBorder(BorderFactory.createLineBorder(player.getColor()));
                 label.addMouseListener(this);
                 boardFrame.add(label);
             }

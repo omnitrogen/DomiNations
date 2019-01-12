@@ -1,19 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class GameWindow {
+public class GameWindow implements MouseListener {
     private JFrame window;
     private JPanel boardAndDeckContainer;
-    private JPanel box_layout;
-    private JPanel tiles_map;
     private BoardGameWindow boardGameWindow;
 
     private Game currentGame;
-
     private DeckPanel dominoDeckWindow;
-
     private ConsolePanel consoleWindow;
+
+    private King next;
 
     public GameWindow(Game game) {
         currentGame = game;
@@ -29,7 +29,7 @@ public class GameWindow {
 
         consoleWindow = new ConsolePanel();
         boardGameWindow = new BoardGameWindow(consoleWindow, currentGame.getPlayerList());
-        dominoDeckWindow = new DeckPanel(new ArrayList<>());
+        dominoDeckWindow = new DeckPanel(new ArrayList<>(), this);
 
         boardAndDeckContainer = new JPanel();
         boardAndDeckContainer.setLayout(new GridLayout(1, 2));
@@ -57,8 +57,14 @@ public class GameWindow {
     }
 
     private void callForNextPlayer() {
-        King next = currentGame.getNextKingToPlay();
-        consoleWindow.log("Joueur " + next.getNbPlayer() + ", choisissez un domino parmi ceux de la pioche.");
+        next = currentGame.getNextKingToPlay();
+        if (currentGame.isPlacementPhase())
+            if (currentGame.getNumberOfPlayers() == 2)
+                consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez votre premier domino choisi (de haut en bas).");
+            else
+                consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez votre domino.");
+        else
+            consoleWindow.log("Joueur " + next.getNbPlayer() + ", choisissez un domino parmi ceux de la pioche.");
     }
 
     private void refreshDominoDeck() {
@@ -66,7 +72,7 @@ public class GameWindow {
 
         ArrayList<Domino> deck = currentGame.pickDominosAtBeginningOfTurn();
         if (deck != null) {
-            dominoDeckWindow = new DeckPanel(deck);
+            dominoDeckWindow = new DeckPanel(deck, this);
 
             boardAndDeckContainer.add(dominoDeckWindow);
             boardAndDeckContainer.revalidate();
@@ -75,5 +81,37 @@ public class GameWindow {
         else {
             consoleWindow.log("Il n'y a plus de pioche, le jeu est fini !");
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        ImagePanel dominoPanel = (ImagePanel)mouseEvent.getComponent();
+
+        if (dominoPanel.getDomino().getLinkedKing() == null) {
+            dominoPanel.setBorder(BorderFactory.createLineBorder(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getColor()));
+            dominoPanel.getDomino().setLinkedKing(next);
+            next.setLocation(dominoPanel.getDomino());
+            currentGame.addDominoWithKing(dominoPanel.getDomino());
+            step();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
     }
 }

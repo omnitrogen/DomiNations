@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class IndividualBoard extends JPanel implements MouseListener {
@@ -14,6 +16,9 @@ public class IndividualBoard extends JPanel implements MouseListener {
     private boolean isActive;
     private Domino toPlace;
     private ArrayList<JLabel> layout;
+    private GameWindow gameWindow;
+    private boolean firstClick;
+    private JLabel firstClickLabel;
 
     public IndividualBoard(Player player) {
         initialize(player);
@@ -22,6 +27,7 @@ public class IndividualBoard extends JPanel implements MouseListener {
     private void initialize(Player player) {
         owner = player;
         isActive = false;
+        firstClick = true;
 
         int sizeX = 9;
         int sizeY = 9;
@@ -59,6 +65,10 @@ public class IndividualBoard extends JPanel implements MouseListener {
         this.console = console;
     }
 
+    public void setGameWindow(GameWindow window) {
+        this.gameWindow = window;
+    }
+
     public void updateBoard(int currentPlayer, Domino toPlace) {
         if (currentPlayer == owner.getNumber()) {
             isActive = true;
@@ -70,35 +80,63 @@ public class IndividualBoard extends JPanel implements MouseListener {
         }
     }
 
+    public boolean areAdjacent(JLabel label1, JLabel label2) {
+        int index1 = layout.indexOf(label1);
+        int index2 = layout.indexOf(label2);
+
+        //label 2 left of label 1
+        if ((index1 % 9) > 0 && index1 - index2 == 1)
+            return true;
+
+        //label 2 right of label 1
+        if ((index1 % 9 < 8 && index2 - index1 == 1))
+            return true;
+
+        //label 2 under label 1
+        if ((index1 / 9 < 8) && index2 - index1 == 9)
+            return true;
+
+        //label 2 above label 1
+        if ((index1 / 9 > 0 && index1 - index2 == 9))
+            return true;
+
+        return false;
+    }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         //FIXME: verifications au placement
         if (isActive) {
             JLabel label = (JLabel) mouseEvent.getComponent();
-            BufferedImage img = null;
-            try {
-                img = ImageIO.read(new File(toPlace.getPathToImg()));
 
-                BufferedImage resized = new BufferedImage(mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getType());
-                Graphics2D graphics = resized.createGraphics();
-                graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), 0, 0, img.getWidth() / 2, img.getHeight(), null);
-                graphics.dispose();
-                label.setOpaque(true);
-                label.setIcon(new ImageIcon(resized));
+            if (firstClick || (!firstClick && areAdjacent(label, firstClickLabel))) {
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new File(toPlace.getPathToImg()));
 
-                JLabel secondHalf = layout.get(layout.indexOf(label) + 1);
+                    BufferedImage resized = new BufferedImage(mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getType());
+                    Graphics2D graphics = resized.createGraphics();
+                    graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                    if (firstClick)
+                        graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), 0, 0, img.getWidth() / 2, img.getHeight(), null);
+                    else
+                        graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getWidth() / 2, 0, img.getWidth(), img.getHeight(), null);
+                    graphics.dispose();
+                    label.setOpaque(true);
+                    label.setIcon(new ImageIcon(resized));
 
-                resized = new BufferedImage(mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getType());
-                graphics = resized.createGraphics();
-                graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getWidth() / 2, 0, img.getWidth(), img.getHeight(), null);
-                graphics.dispose();
-                secondHalf.setOpaque(true);
-                secondHalf.setIcon(new ImageIcon(resized));
-
-            } catch (Exception e) {
-                console.log("Error loading image: image not found.");
+                    firstClick = !firstClick;
+                    if (firstClick) {
+                        isActive = false;
+                        firstClickLabel = null;
+                        gameWindow.endOfPlacement();
+                    } else {
+                        firstClickLabel = label;
+                        gameWindow.askForSecondHalf();
+                    }
+                } catch (IOException e) {
+                    console.log("Error loading image: image not found.");
+                }
             }
         }
     }

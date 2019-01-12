@@ -28,7 +28,7 @@ public class GameWindow implements MouseListener {
         window.setResizable(false);
 
         consoleWindow = new ConsolePanel();
-        boardGameWindow = new BoardGameWindow(consoleWindow, currentGame.getPlayerList());
+        boardGameWindow = new BoardGameWindow(this, currentGame.getPlayerList());
         dominoDeckWindow = new DeckPanel(new ArrayList<>(), this);
 
         boardAndDeckContainer = new JPanel();
@@ -58,16 +58,17 @@ public class GameWindow implements MouseListener {
 
     private void callForNextPlayer() {
         next = currentGame.getNextKingToPlay();
-        if (currentGame.isPlacementPhase()) {
-            if (currentGame.getNumberOfPlayers() == 2)
-                consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez votre premier domino choisi.");
-            else
-                consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez votre domino.");
 
+        if (currentGame.isPlacementPhase()) {
+            consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez la premiere moitié de votre domino.");
             boardGameWindow.updateBoards(next.getNbPlayer(), next.getLocation());
         }
         else
             consoleWindow.log("Joueur " + next.getNbPlayer() + ", choisissez un domino parmi ceux de la pioche.");
+    }
+
+    public void askForSecondHalf() {
+        consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez la seconde moitié de votre domino.");
     }
 
     private void refreshDominoDeck() {
@@ -83,7 +84,28 @@ public class GameWindow implements MouseListener {
         }
         else {
             consoleWindow.log("Il n'y a plus de pioche, le jeu est fini !");
+
+            Player winner = null;
+
+            for (Player p : currentGame.getPlayerList()) {
+                p.calculatePlayerScore();
+                if (winner == null || (p.getScore() > winner.getScore()))
+                    winner = p;
+            }
+
+            consoleWindow.log("Le gagnant est: " + winner.getName());
         }
+    }
+
+    public void endOfPlacement() {
+        currentGame.removeDominoWithKing(next.getLocation());
+        next.getLocation().setLinkedKing(null);
+        next.setLocation(null);
+        step();
+    }
+
+    public ConsolePanel getConsolePanel() {
+        return consoleWindow;
     }
 
     @Override
@@ -115,6 +137,5 @@ public class GameWindow implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-
     }
 }

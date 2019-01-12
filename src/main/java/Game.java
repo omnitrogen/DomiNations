@@ -133,6 +133,10 @@ public class Game {
         deckWithKings.add(domino);
     }
 
+    public void removeDominoWithKing(Domino domino) {
+        deckWithKings.remove(domino);
+    }
+
     /**
      * @return the next king to play (and thus the number of the next player to play)
      */

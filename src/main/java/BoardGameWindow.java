@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class BoardGameWindow extends JPanel {
     private JPanel boardsFrame;
     private ConsolePanel console;
+    private GameWindow window;
     private ArrayList<IndividualBoard> boards;
 
-    public BoardGameWindow(ConsolePanel console, ArrayList<Player> players) {
-        this.console = console;
+    public BoardGameWindow(GameWindow window, ArrayList<Player> players) {
+        this.console = window.getConsolePanel();
+        this.window = window;
         initialize(players);
     }
 
@@ -24,6 +26,7 @@ public class BoardGameWindow extends JPanel {
         for (int i = 0; i < players.size(); ++i) {
             IndividualBoard board = new IndividualBoard(players.get(i));
             board.setConsole(console);
+            board.setGameWindow(window);
             boards.add(board);
             boardsFrame.add((board.getBoardFrame()));
         }

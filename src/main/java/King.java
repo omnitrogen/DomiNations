@@ -13,7 +13,8 @@ public class King {
 
     public void setLocation(Domino location) {
         this.location_ = location;
-        location.setLinkedKing(this);
+        if (location_ != null)
+            location.setLinkedKing(this);
     }
 
     public int getNbPlayer() {

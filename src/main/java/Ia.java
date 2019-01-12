@@ -23,7 +23,7 @@ public class Ia extends Player {
 	private HalfDomino.TerrainType xRightTerrainBelow;
 	
 	public Ia(int number) {
-		super(number);
+		super(number, "IA " + number);
 	}
 	
 	public void playIa(Domino domino) {

@@ -9,12 +9,18 @@ import java.io.File;
 public class IndividualBoard extends JPanel implements MouseListener {
     private JPanel boardFrame;
     private ConsolePanel console;
+    private Player owner;
+    private boolean isActive;
+    private Domino toPlace;
 
     public IndividualBoard(Player player) {
         initialize(player);
     }
 
     private void initialize(Player player) {
+        owner = player;
+        isActive = false;
+
         int sizeX = 9;
         int sizeY = 9;
 
@@ -27,7 +33,12 @@ public class IndividualBoard extends JPanel implements MouseListener {
             {
                 JLabel label = new JLabel();
                 label.setVisible(true);
-                label.setBorder(BorderFactory.createLineBorder(player.getColor()));
+                if (i == sizeX / 2 && j == sizeY / 2) {
+                    label.setBackground(player.getColor());
+                    label.setOpaque(true);
+                }
+                else
+                    label.setBorder(BorderFactory.createLineBorder(player.getColor()));
                 label.addMouseListener(this);
                 boardFrame.add(label);
             }
@@ -44,18 +55,30 @@ public class IndividualBoard extends JPanel implements MouseListener {
         this.console = console;
     }
 
+    public void updateBoard(int currentPlayer, Domino toPlace) {
+        if (currentPlayer == owner.getNumber()) {
+            isActive = true;
+            this.toPlace = toPlace;
+        }
+        else {
+            isActive = false;
+            this.toPlace = null;
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        JLabel label = (JLabel)mouseEvent.getComponent();
-        label.setOpaque(true);
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("res/dd1.png"));
-            label.setIcon(new ImageIcon(img));
-        }
-        catch (Exception e)
-        {
-            console.log("Error loading image: image not found.");
+        //FIXME: verifications au placement
+        if (isActive) {
+            JLabel label = (JLabel) mouseEvent.getComponent();
+            label.setOpaque(true);
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(new File(toPlace.getPathToImg()));
+                label.setIcon(new ImageIcon(img));
+            } catch (Exception e) {
+                console.log("Error loading image: image not found.");
+            }
         }
     }
 

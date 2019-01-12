@@ -34,7 +34,7 @@ public class Game {
                 this.kingList.add(new King((i % 2) + 1));
             }
         } else {
-            for (int i = 0; i < numberOfPlayers; i++) {
+            for (int i = 1; i < numberOfPlayers + 1; i++) {
                 this.kingList.add(new King(i));
             }
         }
@@ -89,11 +89,11 @@ public class Game {
     public ArrayList<Domino> sortDeck(ArrayList<Domino> deck) {
         ArrayList<Domino> sorted = new ArrayList<>();
 
-        for (int i = 0; i < deck.size(); ++i)
+        while (deck.size() > 0)
         {
             Domino minimum = null;
 
-            for (int j = i; j < deck.size(); ++j)
+            for (int j = 0; j < deck.size(); ++j)
             {
                 if (minimum == null || deck.get(j).getNumber() < minimum.getNumber())
                 {
@@ -102,6 +102,7 @@ public class Game {
             }
 
             sorted.add(minimum);
+            deck.remove(minimum);
         }
 
         return sorted;
@@ -126,12 +127,18 @@ public class Game {
         return turnDeck;
     }
 
+    public void addDominoWithKing(Domino domino)
+    {
+        turnDeck.remove(domino);
+        deckWithKings.add(domino);
+    }
+
     /**
      * @return the next king to play (and thus the number of the next player to play)
      */
     public King getNextKingToPlay() {
         //If not the 1st turn (some dominos are picked, and thus placed in deckWithKings)
-        if (deckWithKings.size() > 0)
+        if (turnDeck.size() == 0 && deckWithKings.size() > 0)
         {
             Domino minimum = null;
 
@@ -153,6 +160,14 @@ public class Game {
         }
 
         return null;
+    }
+
+    public boolean isSelectionPhase() {
+        return turnDeck.size() > 0;
+    }
+
+    public boolean isPlacementPhase() {
+        return deckWithKings.size() > 0 && !isSelectionPhase();
     }
 
     public boolean endOfTurn() {

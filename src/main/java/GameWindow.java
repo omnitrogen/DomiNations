@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameWindow {
     private JFrame window;
@@ -8,13 +9,16 @@ public class GameWindow {
     private JPanel tiles_map;
     private BoardGameWindow boardGameWindow;
 
-    //FIXME: Change BoardGameWindow with DominoDeckWindow (or equivalent class)
-    private JLabel dominoDeckWindow;
+    private Game currentGame;
+
+    private DeckPanel dominoDeckWindow;
 
     private ConsolePanel consoleWindow;
 
-    public GameWindow() {
+    public GameWindow(Game game) {
+        currentGame = game;
         initialize();
+        startGame();
     }
 
     private void initialize() {
@@ -25,9 +29,7 @@ public class GameWindow {
 
         consoleWindow = new ConsolePanel();
         boardGameWindow = new BoardGameWindow(consoleWindow);
-
-        //FIXME: Change with corresponding constructors
-        dominoDeckWindow = new JLabel("coucou");
+        dominoDeckWindow = new DeckPanel(new ArrayList<>());
 
         boardAndDeckContainer = new JPanel();
         boardAndDeckContainer.setLayout(new GridLayout(1, 2));
@@ -42,7 +44,8 @@ public class GameWindow {
         window.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        GameWindow game = new GameWindow();
+    private void startGame() {
+        dominoDeckWindow = new DeckPanel(currentGame.pickDominosAtBeginningOfTurn());
+
     }
 }

@@ -163,6 +163,9 @@ public class Fenetre extends JFrame {
             if ((Integer)combo.getSelectedItem() == 4)
                 playerNames.add((joueurQuatreNom.getText().isEmpty()) ? "Joueur 4" : joueurQuatreNom.getText());
 
+            Game game = new Game(playerNames);
+            GameWindow window = new GameWindow(game);
+
             fenetre.setVisible(false);
             fenetre.dispose();
 

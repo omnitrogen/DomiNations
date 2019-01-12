@@ -34,6 +34,8 @@ public class ConsolePanel extends JPanel {
         if (!console.getText().isEmpty())
             console.append("\n");
         console.append(string);
+        scroll.validate();
+        scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
         console.update(console.getGraphics());
     }
 }

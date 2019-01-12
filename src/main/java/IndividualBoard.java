@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 public class IndividualBoard extends JPanel implements MouseListener {
     private JPanel boardFrame;
@@ -44,7 +43,6 @@ public class IndividualBoard extends JPanel implements MouseListener {
 
     public void setConsole(ConsolePanel console) {
         this.console = console;
-        console.log("Click");
     }
 
     @Override

@@ -23,12 +23,11 @@ public class GameWindow {
         window.setMaximumSize(new Dimension(500, 500));
         window.setResizable(false);
 
-        boardGameWindow = new BoardGameWindow();
+        consoleWindow = new ConsolePanel();
+        boardGameWindow = new BoardGameWindow(consoleWindow);
 
         //FIXME: Change with corresponding constructors
         dominoDeckWindow = new JLabel("coucou");
-        
-        consoleWindow = new ConsolePanel();
 
         boardAndDeckContainer = new JPanel();
         boardAndDeckContainer.setLayout(new GridLayout(1, 2));

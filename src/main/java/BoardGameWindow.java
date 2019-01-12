@@ -3,8 +3,10 @@ import java.awt.*;
 
 public class BoardGameWindow extends JPanel {
     private JPanel boardsFrame;
+    private ConsolePanel console;
 
-    public BoardGameWindow() {
+    public BoardGameWindow(ConsolePanel console) {
+        this.console = console;
         initialize();
     }
 
@@ -15,9 +17,13 @@ public class BoardGameWindow extends JPanel {
         boardsFrame = new JPanel();
         boardsFrame.setLayout(new GridLayout(sizeY, sizeX));
 
-        for (int i = 0; i < sizeX; ++i)
-            for (int j = 0; j < sizeY; ++j)
-                boardsFrame.add((new IndividualBoard()).getBoardFrame());
+        for (int i = 0; i < sizeX; ++i) {
+            for (int j = 0; j < sizeY; ++j) {
+                IndividualBoard board = new IndividualBoard();
+                board.setConsole(console);
+                boardsFrame.add((board.getBoardFrame()));
+            }
+        }
     }
 
     public JPanel getBoardsFrame() {

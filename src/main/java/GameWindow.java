@@ -42,10 +42,13 @@ public class GameWindow {
 
         window.pack();
         window.setVisible(true);
+
+        startGame();
     }
 
     private void startGame() {
-        dominoDeckWindow = new DeckPanel(currentGame.pickDominosAtBeginningOfTurn());
-
+        ArrayList<Domino> deck = currentGame.pickDominosAtBeginningOfTurn();
+        dominoDeckWindow = new DeckPanel(deck);
+        dominoDeckWindow.update(dominoDeckWindow.getGraphics());
     }
 }

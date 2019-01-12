@@ -22,6 +22,7 @@ public class Game {
         turnDeck = new ArrayList<>();
         playerList = new ArrayList<>();
         kingList = new ArrayList<>();
+        deckWithKings = new ArrayList<>();
 
         for (int i = 0; i < numberOfPlayers; i++) {
             this.playerList.add(new Player(i + 1, playerNames.get(i)));
@@ -73,6 +74,7 @@ public class Game {
     public ArrayList<Domino> pickDominosAtBeginningOfTurn() {
         if (turnDeck.size() != 0)
         {
+            deckWithKings.clear();
             deckWithKings.addAll(turnDeck);
             turnDeck.clear();
         }

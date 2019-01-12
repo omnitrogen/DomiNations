@@ -1,6 +1,4 @@
 import java.awt.Color;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Random;
 
 public class Player {
@@ -20,11 +18,14 @@ public class Player {
         score_ = 0;
         boardGamePlayer_ = new BoardGame(number);
 
-        Random rand = new Random();
-        int r = rand.nextInt(255);
-        int g = rand.nextInt(255);
-        int b = rand.nextInt(255);
-        color_ = new Color(r, g, b);
+        if (number == 1)
+            color_ = Color.ORANGE;
+        else if (number == 2)
+            color_ = Color.BLUE;
+        else if (number == 3)
+            color_ = Color.MAGENTA;
+        else if (number == 4)
+            color_ = Color.DARK_GRAY;
     }
 
     public String getName() { return name_; }

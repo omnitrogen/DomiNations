@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class BoardGame {
 	
 	private int id;
@@ -14,7 +12,7 @@ public class BoardGame {
 	}
 
 	// Verifie que la case d a cote du domino n'est pas vide
-	// que ce terrain correspond au terrain de la moitie du domino qui est accole ou que le terrain accole est le chateau
+	// que ce terrain correspond au terrain de la moitie du domino qui lui est accole ou a un chateau
 	// que les deux moities du domino sont sur des cases vides
 	// que le plateau reste de la bonne dimension
 	

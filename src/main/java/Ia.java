@@ -1,7 +1,3 @@
-import java.util.*;
-import java.awt.Color;
-import java.util.Random;
-
 public class Ia extends Player {
 
 	private int xLeft;
@@ -9,10 +5,6 @@ public class Ia extends Player {
 	private int yLeft;
 	private int yRight;
 	private int score;
-	private int idealPositionXLeft;
-	private int idealPositionYLeft;
-	private int idealPositionXRight;
-	private int idealPositionYRight;
 	private HalfDomino.TerrainType xLeftTerrainUp;
 	private HalfDomino.TerrainType xLeftTerrainLeft;
 	private HalfDomino.TerrainType xLeftTerrainRight;
@@ -223,9 +215,9 @@ public class Ia extends Player {
 	}
 	
 	public void putIdealPosition() {
-		idealPositionXLeft = xLeft;
-		idealPositionYLeft = yLeft;
-		idealPositionXRight = xRight;
-		idealPositionYRight = yRight;
+		int idealPositionXLeft = xLeft;
+		int idealPositionYLeft = yLeft;
+		int idealPositionXRight = xRight;
+		int idealPositionYRight = yRight;
 	}
 }

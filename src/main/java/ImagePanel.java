@@ -6,13 +6,20 @@ import java.awt.*;
 public class ImagePanel extends JPanel {
 
     private Image image;
+    private Domino domino;
 
-    public ImagePanel(String path) {
+    public ImagePanel(Domino domino) {
+        this.domino = domino;
+
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(new File(domino.getPathToImg()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Domino getDomino() {
+        return this.domino;
     }
 
     @Override
@@ -20,5 +27,4 @@ public class ImagePanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
     }
-
 }

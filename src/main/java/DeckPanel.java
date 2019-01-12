@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.*;
 
 
@@ -7,7 +8,7 @@ import java.util.*;
  * On créer à chaque tour un deck, qui prend en entrée la liste turnDeck qui est le deck associé au tour.
  */
 public class DeckPanel extends JPanel {
-    public DeckPanel(ArrayList<Domino> deck) {
+    public DeckPanel(ArrayList<Domino> deck, MouseListener mouseListener) {
         GridBagLayout containerLayout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -22,10 +23,11 @@ public class DeckPanel extends JPanel {
             gbc.gridy = i;
             gbc.ipadx = 146;
             gbc.ipady = 62;
-            ImagePanel image = new ImagePanel(domino.getPathToImg());
+            ImagePanel image = new ImagePanel(domino);
+            image.addMouseListener(mouseListener);
             containerLayout.setConstraints(image, gbc);
             this.add(image);
-            i ++;
+            i++;
         }
 
     }

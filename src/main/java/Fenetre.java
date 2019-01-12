@@ -1,13 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 
 public class Fenetre extends JFrame {
 
-    DeckPanel deck = new DeckPanel(3);
-
-    // private Panneau pan = new Panneau();
+    private JFrame fenetre = new JFrame();
     private Bouton bouton = new Bouton("Play");
     private Integer[] nombreJoueursList = {2, 3, 4};
     private JComboBox<Integer> combo = new JComboBox<Integer>(nombreJoueursList);
@@ -27,11 +26,11 @@ public class Fenetre extends JFrame {
 
 
     public Fenetre(){
-        this.setTitle("DomiNations");
-        this.setSize(1000, 800);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        fenetre.setTitle("DomiNations");
+        fenetre.setSize(1000, 800);
+        fenetre.setLocationRelativeTo(null);
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setResizable(false);
 
         Font font = new Font("Courrier", Font.PLAIN, 40);
         label.setFont(font);
@@ -124,32 +123,42 @@ public class Fenetre extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.NONE;
-        containerLayout.setConstraints(deck, gbc);
+        //containerLayout.setConstraints(deck, gbc);
 
         container.add(label);
         container.add(label2);
         container.add(combo);
         container.add(containerJoueursNom);
         container.add(bouton);
-        container.add(deck);
+        //container.add(deck);
 
         bouton.addActionListener(new BoutonListener());
 
-        this.setContentPane(container);
+        fenetre.setContentPane(container);
 
-        this.setVisible(true);
+        fenetre.setVisible(true);
     }
 
     class BoutonListener implements ActionListener{
         //Redéfinition de la méthode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-            // label.setText("Vous avez cliqué sur le bouton 1");
-            System.out.print(joueurUnNom.getText() + joueurDeuxNom.getText());
-            if ((Integer)combo.getSelectedItem() >= 3) {
-                System.out.print(joueurTroisNom.getText());
-            } if ((Integer)combo.getSelectedItem() == 4) {
-                System.out.print(joueurQuatreNom.getText());
-            }
+            ArrayList<String> playerNames = new ArrayList<>();
+            playerNames.add((joueurUnNom.getText().isEmpty()) ? "Joueur 1" : joueurUnNom.getText());
+            playerNames.add((joueurDeuxNom.getText().isEmpty()) ? "Joueur 2" : joueurDeuxNom.getText());
+
+            if ((Integer)combo.getSelectedItem() >= 3)
+                playerNames.add((joueurTroisNom.getText().isEmpty()) ? "Joueur 3" : joueurTroisNom.getText());
+
+            if ((Integer)combo.getSelectedItem() == 4)
+                playerNames.add((joueurQuatreNom.getText().isEmpty()) ? "Joueur 4" : joueurQuatreNom.getText());
+
+            Game game = new Game(playerNames);
+
+            GameWindow window = new GameWindow(game);
+
+            fenetre.setVisible(false);
+            fenetre.dispose();
+
         }
     }
 

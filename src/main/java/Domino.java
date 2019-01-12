@@ -6,6 +6,7 @@ public class Domino {
     private HalfDomino left_;
     private HalfDomino right_;
     private King linkedKing_;
+    private String pathToImg;
 
     public Domino(String line) {
         String[] splitted_line = line.split(",");
@@ -42,6 +43,10 @@ public class Domino {
         linkedKing_ = king;
     }
 
+    public String getPathToImg() { return pathToImg; }
+
+    public void setPathToImg(String path) { pathToImg = path; }
+
     public static ArrayList<Domino> getDominosFromCSV() {
         ArrayList<Domino> dominosList = new ArrayList<>();
 
@@ -53,9 +58,13 @@ public class Domino {
             reader.readLine();
 
             String line;
+            int i = 1;
 
             while ((line = reader.readLine()) != null) {
-                dominosList.add(new Domino(line));
+                Domino toAdd = new Domino(line);
+                toAdd.setPathToImg("res/dd" + i + ".png");
+                dominosList.add(toAdd);
+                ++i;
             }
             
             return dominosList;

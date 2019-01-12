@@ -16,15 +16,17 @@ public class Game {
 
     public Game () {}
 
-    public Game(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
+    public Game(ArrayList<String> playerNames) {
+        this.numberOfPlayers = playerNames.size();
         this.deck = Domino.getDominosFromCSV();
         turnDeck = new ArrayList<>();
         playerList = new ArrayList<>();
+        kingList = new ArrayList<>();
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            this.playerList.add(new Player(i + 1));
+            this.playerList.add(new Player(i + 1, playerNames.get(i)));
         }
+
         if (numberOfPlayers == 2) {
             for (int i = 1; i < 5; i++) {
                 this.kingList.add(new King((i % 2) + 1));
@@ -68,7 +70,7 @@ public class Game {
     /**
      * Pick numberOfKings elements from the deck and place them in turnDeck
      */
-    public void pickDominosAtBeginningOfTurn() {
+    public ArrayList<Domino> pickDominosAtBeginningOfTurn() {
         if (turnDeck.size() != 0)
         {
             deckWithKings.addAll(turnDeck);
@@ -76,6 +78,8 @@ public class Game {
         }
 
         turnDeck = pickNDominos(kingList.size());
+
+        return turnDeck;
     }
 
     /**

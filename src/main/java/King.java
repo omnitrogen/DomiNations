@@ -15,4 +15,8 @@ public class King {
         this.location_ = location;
         location.setLinkedKing(this);
     }
+
+    public int getNbPlayer() {
+        return nbPlayer_;
+    }
 }

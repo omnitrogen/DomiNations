@@ -18,13 +18,11 @@ public class DeckPanel extends JPanel {
 
         int i = 0;
         for (Domino domino: deck) {
-            System.out.println("bleh");
             gbc.gridx = 0;
             gbc.gridy = i;
             gbc.ipadx = 146;
             gbc.ipady = 62;
-            //TODO: Find a way to link a Domino Object to his image
-            ImagePanel image = new ImagePanel("res2/dd1.png");
+            ImagePanel image = new ImagePanel(domino.getPathToImg());
             containerLayout.setConstraints(image, gbc);
             this.add(image);
             i ++;

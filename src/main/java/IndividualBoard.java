@@ -10,11 +10,11 @@ public class IndividualBoard extends JPanel implements MouseListener {
     private JPanel boardFrame;
     private ConsolePanel console;
 
-    public IndividualBoard() {
-        initialize();
+    public IndividualBoard(Player player) {
+        initialize(player);
     }
 
-    private void initialize() {
+    private void initialize(Player player) {
         int sizeX = 9;
         int sizeY = 9;
 
@@ -27,14 +27,13 @@ public class IndividualBoard extends JPanel implements MouseListener {
             {
                 JLabel label = new JLabel();
                 label.setVisible(true);
-                label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                label.setBorder(BorderFactory.createLineBorder(player.getColor()));
                 label.addMouseListener(this);
                 boardFrame.add(label);
             }
         }
 
         boardFrame.setVisible(true);
-        boardFrame.setBorder(BorderFactory.createLineBorder(Color.RED));
     }
 
     public JPanel getBoardFrame() {

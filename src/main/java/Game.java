@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,17 +23,18 @@ public class Game {
         turnDeck = new ArrayList<>();
         playerList = new ArrayList<>();
         kingList = new ArrayList<>();
+        deckWithKings = new ArrayList<>();
 
         for (int i = 0; i < numberOfPlayers; i++) {
             this.playerList.add(new Player(i + 1, playerNames.get(i)));
         }
 
         if (numberOfPlayers == 2) {
-            for (int i = 1; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 this.kingList.add(new King((i % 2) + 1));
             }
         } else {
-            for (int i = 1; i < numberOfPlayers; i++) {
+            for (int i = 0; i < numberOfPlayers; i++) {
                 this.kingList.add(new King(i));
             }
         }
@@ -52,19 +54,57 @@ public class Game {
         }
     }
 
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public int getDeckSize() {
+        return deck.size();
+    }
+
     /**
      * Pick n random elements from the deck and return them in an ArrayList
      * @param  n {@code int} the number of element to pick from the deck
      * @return an ArrayList {@code ArrayList} with n elements picked randomly in the deck and delete them from the deck
      */
     public ArrayList<Domino> pickNDominos(int n) {
+        if (deck.size() == 0)
+            return null;
+
         ArrayList<Domino> newDeck = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
             int number = rand.nextInt(deck.size());
             newDeck.add(deck.get(number));
             deck.remove(number);
         }
+
         return newDeck;
+    }
+
+    public ArrayList<Domino> sortDeck(ArrayList<Domino> deck) {
+        ArrayList<Domino> sorted = new ArrayList<>();
+
+        for (int i = 0; i < deck.size(); ++i)
+        {
+            Domino minimum = null;
+
+            for (int j = i; j < deck.size(); ++j)
+            {
+                if (minimum == null || deck.get(j).getNumber() < minimum.getNumber())
+                {
+                    minimum = deck.get(j);
+                }
+            }
+
+            sorted.add(minimum);
+        }
+
+        return sorted;
     }
 
     /**
@@ -73,11 +113,15 @@ public class Game {
     public ArrayList<Domino> pickDominosAtBeginningOfTurn() {
         if (turnDeck.size() != 0)
         {
+            deckWithKings.clear();
             deckWithKings.addAll(turnDeck);
             turnDeck.clear();
         }
 
         turnDeck = pickNDominos(kingList.size());
+
+        if (turnDeck != null)
+            turnDeck = sortDeck(turnDeck);
 
         return turnDeck;
     }
@@ -108,7 +152,10 @@ public class Game {
             }
         }
 
-        //Should not happen
         return null;
+    }
+
+    public boolean endOfTurn() {
+        return (turnDeck.size() == 0 && deckWithKings.size() == 0);
     }
 }

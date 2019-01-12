@@ -28,7 +28,7 @@ public class GameWindow {
         window.setResizable(false);
 
         consoleWindow = new ConsolePanel();
-        boardGameWindow = new BoardGameWindow(consoleWindow);
+        boardGameWindow = new BoardGameWindow(consoleWindow, currentGame.getPlayerList());
         dominoDeckWindow = new DeckPanel(new ArrayList<>());
 
         boardAndDeckContainer = new JPanel();
@@ -45,7 +45,35 @@ public class GameWindow {
     }
 
     private void startGame() {
-        dominoDeckWindow = new DeckPanel(currentGame.pickDominosAtBeginningOfTurn());
+        consoleWindow.log("Lancement du jeu !");
+        step();
+    }
 
+    private void step() {
+        if (currentGame.endOfTurn())
+            refreshDominoDeck();
+
+        callForNextPlayer();
+    }
+
+    private void callForNextPlayer() {
+        King next = currentGame.getNextKingToPlay();
+        consoleWindow.log("Joueur " + next.getNbPlayer() + ", choisissez un domino parmi ceux de la pioche.");
+    }
+
+    private void refreshDominoDeck() {
+        boardAndDeckContainer.remove(dominoDeckWindow);
+
+        ArrayList<Domino> deck = currentGame.pickDominosAtBeginningOfTurn();
+        if (deck != null) {
+            dominoDeckWindow = new DeckPanel(deck);
+
+            boardAndDeckContainer.add(dominoDeckWindow);
+            boardAndDeckContainer.revalidate();
+            boardAndDeckContainer.repaint();
+        }
+        else {
+            consoleWindow.log("Il n'y a plus de pioche, le jeu est fini !");
+        }
     }
 }

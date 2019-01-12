@@ -58,11 +58,14 @@ public class GameWindow implements MouseListener {
 
     private void callForNextPlayer() {
         next = currentGame.getNextKingToPlay();
-        if (currentGame.isPlacementPhase())
+        if (currentGame.isPlacementPhase()) {
             if (currentGame.getNumberOfPlayers() == 2)
-                consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez votre premier domino choisi (de haut en bas).");
+                consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez votre premier domino choisi.");
             else
                 consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez votre domino.");
+
+            boardGameWindow.updateBoards(next.getNbPlayer(), next.getLocation());
+        }
         else
             consoleWindow.log("Joueur " + next.getNbPlayer() + ", choisissez un domino parmi ceux de la pioche.");
     }

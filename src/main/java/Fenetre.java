@@ -10,7 +10,7 @@ public class Fenetre extends JFrame {
     private Bouton bouton = new Bouton("Play");
     private Integer[] nombreJoueursList = {2, 3, 4};
     private JComboBox<Integer> combo = new JComboBox<Integer>(nombreJoueursList);
-    private JPanel container = new JPanel();
+    private Container container = new Container();
     private JPanel containerSelectNumber = new JPanel();
     private JPanel containerJoueursNom = new JPanel();
     private JLabel label = new JLabel("DomiNations");
@@ -33,17 +33,28 @@ public class Fenetre extends JFrame {
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setResizable(false);
 
-        Font font = new Font("Courrier", Font.PLAIN, 40);
+        Font font = new Font("Courrier", Font.PLAIN, 50);
         label.setFont(font);
         label.setForeground(Color.blue);
         label.setHorizontalAlignment(JLabel.CENTER);
+        Font font2 = new Font("Courrier", Font.PLAIN, 25);
+        label2.setFont(font2);
+        label2.setHorizontalAlignment(JLabel.CENTER);
+        joueurUnLabel.setFont(font2);
+        joueurUnLabel.setHorizontalAlignment(JLabel.CENTER);
+        joueurDeuxLabel.setFont(font2);
+        joueurDeuxLabel.setHorizontalAlignment(JLabel.CENTER);
+        joueurTroisLabel.setFont(font2);
+        joueurTroisLabel.setHorizontalAlignment(JLabel.CENTER);
+        joueurQuatreLabel.setFont(font2);
+        joueurQuatreLabel.setHorizontalAlignment(JLabel.CENTER);
 
         combo.setPreferredSize(new Dimension(100, 30));
         combo.addActionListener(new ItemAction());
 
-        container.setBackground(Color.white);
-        containerSelectNumber.setBackground(Color.white);
-        containerJoueursNom.setBackground(Color.white);
+        container.setBackground(new Color(0,0,0,0));
+        containerSelectNumber.setBackground(new Color(0,0,0,0));
+        containerJoueursNom.setBackground(new Color(0,0,0,0));
 
         GridBagLayout containerLayout = new GridBagLayout();
         GridBagLayout containerSelectNumberLayout = new GridBagLayout();

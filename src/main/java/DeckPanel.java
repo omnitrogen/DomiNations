@@ -38,15 +38,12 @@ public class DeckPanel extends JPanel {
 
         int i = 0;
         for (Domino domino: deck) {
-            System.out.println("bleh");
             gbc.gridx = 0;
             gbc.gridy = i;
             gbc.ipadx = 146;
             gbc.ipady = 62;
-            //TODO: Find a way to link a Domino Object to his image
-            String path = "res2/dd1.png";
             try {
-                image = ImageIO.read(new File(path));
+                image = ImageIO.read(new File(domino.getPathToImg()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -54,7 +51,7 @@ public class DeckPanel extends JPanel {
             containerLayout.setConstraints(pic1, gbc);
             pic1.setTransferHandler(picHandler);
             this.add(pic1);
-            i ++;
+            i++;
         }
     }
 }

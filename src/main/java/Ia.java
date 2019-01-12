@@ -40,7 +40,7 @@ public class Ia extends Player {
 				yRight = yLeft;
 				
 				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
-					calculatePlayerScore(number_);
+					calculatePlayerScore();
 					if (score_ > score) {
 						putIdealPosition();
 					}
@@ -69,7 +69,7 @@ public class Ia extends Player {
 				yRight = yLeft;
 				
 				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
-					calculatePlayerScore(number_);
+					calculatePlayerScore();
 					if (score_ > score) {
 						putIdealPosition();
 					}
@@ -99,7 +99,7 @@ public class Ia extends Player {
 				yRight = yLeft + 1;
 				
 				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
-					calculatePlayerScore(number_);
+					calculatePlayerScore();
 					if (score_ > score) {
 						putIdealPosition();
 					}
@@ -129,7 +129,7 @@ public class Ia extends Player {
 				yRight = yLeft - 1;
 				
 				if(BoardGame.checkDominoWellPlaced(boardGame, domino, xLeft, yLeft, xRight, yRight) == true){
-					calculatePlayerScore(number_);
+					calculatePlayerScore();
 					if (score_ > score) {
 						putIdealPosition();
 					}

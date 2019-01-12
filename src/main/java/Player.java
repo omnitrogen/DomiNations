@@ -31,23 +31,15 @@ public class Player {
 
     public void setName(String name) { this.name_ = name; }
 
-    public int getScore() {
-        return score_;
-    }
+    public int getScore() { return score_; }
 
-    public void setScore(int score_) {
-        this.score_ = score_;
-    }
+    public void setScore(int score_) { this.score_ = score_; }
 
-    public Color getColor() {
-        return color_;
-    }
+    public Color getColor() { return color_; }
 
-    public int getNumber() {
-        return number_;
-    }
+    public int getNumber() { return number_; }
 
-    public void calculatePlayerScore(int id) {
+    public void calculatePlayerScore() {
     	score_ = 0;
     	
     	for (int k = 0; k < BoardGame.gameBoardSize; k++) {

@@ -18,8 +18,6 @@ public class Game {
     public boolean selectionPhase;
     public int isLastTurn;
 
-    public Game () {}
-
     public Game(ArrayList<String> playerNames) {
         this.numberOfPlayers = playerNames.size();
         this.deck = Domino.getDominosFromCSV();

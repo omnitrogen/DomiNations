@@ -22,9 +22,9 @@ public class Ia extends Player {
 		HalfDomino[][] boardGame = boardGamePlayer_.getBoardGame();
 		score = 0;
 		
-		// Cas ou la partie droite du domino est a droite de la partie gauche
+		// Case where the right part of the domino is on the right of the left part
 		
-		// Parcourt le plateau de jeu
+		// Read through the boardgame
 		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
 			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
 				
@@ -42,17 +42,17 @@ public class Ia extends Player {
 						xLeftTerrainLeft(boardGame);					
 						xRightTerrainUp(boardGame);
 						xRightTerrainBelow(boardGame);
-						xRightTerrainRight(boardGame);						
-					}						
+						xRightTerrainRight(boardGame);
 						
-					if (((xLeftTerrainUp == domino.getLeft().getTerrain()) || (xLeftTerrainLeft == domino.getLeft().getTerrain()) || (xLeftTerrainBelow == domino.getLeft().getTerrain())) && ((xRightTerrainUp == domino.getRight().getTerrain()) || (xRightTerrainRight == domino.getRight().getTerrain()) || (xRightTerrainBelow == domino.getRight().getTerrain()))) {
-						putIdealPosition();
-					}
+						if (((xLeftTerrainUp == domino.getLeft().getTerrain()) || (xLeftTerrainLeft == domino.getLeft().getTerrain()) || (xLeftTerrainBelow == domino.getLeft().getTerrain())) && ((xRightTerrainUp == domino.getRight().getTerrain()) || (xRightTerrainRight == domino.getRight().getTerrain()) || (xRightTerrainBelow == domino.getRight().getTerrain()))) {
+							putIdealPosition();
+						}
+					}						
 				}
 			}
 		}
 		
-		// Cas ou la partie droite du domino est a gauche de la partie gauche
+		// Case where the right part of the domino is on the left of the left part
 		
 		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
 			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
@@ -82,7 +82,7 @@ public class Ia extends Player {
 		}
 						
 							
-		// Cas ou la partie droite du domino est au-dessus de la partie gauche
+		// Case where the right part of the domino is above the left part
 		
 		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
 			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){
@@ -112,7 +112,7 @@ public class Ia extends Player {
 		}
 						
 								
-		// Cas ou la partie droite du domino est en-dessous de la partie gauche
+		// Case where the right part of the domino is below the left part
 		
 		for(yLeft = 0; yLeft < BoardGame.gameBoardSize; yLeft++){
 			for(xLeft = 0; xLeft < BoardGame.gameBoardSize; xLeft++){

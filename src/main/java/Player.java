@@ -46,6 +46,7 @@ public class Player {
     public void calculatePlayerScore() {
     	score_ = 0;
     	
+    	// Initialize the verificationBoardGame
     	for (int k = 0; k < BoardGame.gameBoardSize; k++) {
 			for (int l = 0; l < BoardGame.gameBoardSize; l++) {
 				verificationBoardGame_[k][l] = false;
@@ -54,6 +55,7 @@ public class Player {
 
         HalfDomino[][] boardGame = boardGamePlayer_.getBoardGame();
 
+        // Read through the boardgame
     	for (int i = 0; i < BoardGame.gameBoardSize; i++) {
 			for (int j = 0; j < BoardGame.gameBoardSize; j++) {
 				if (verificationBoardGame_[i][j] == false && boardGame[i][j] != null && boardGame[i][j].getTerrain() != HalfDomino.TerrainType.CASTLE) {
@@ -68,7 +70,8 @@ public class Player {
 			}
     	}
     }
-
+    
+    // Check if the neighbors of half of the domino are of the same type
     public void verifyIfNeighbour(int i, int j, HalfDomino[][] boardGame, boolean[][] verificationBoardGame) {
         if (i < 8 && verificationBoardGame[i + 1][j] == false && boardGame[i + 1][j] != null && boardGame[i][j] != null && boardGame[i + 1][j].getTerrain() == boardGame[i][j].getTerrain()) {
             verificationBoardGame[i + 1][j] = true;

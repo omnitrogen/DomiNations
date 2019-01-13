@@ -42,12 +42,6 @@ public class BoardGame {
 
 		return false;
 	}
-	
-	public static boolean dominoWellplacedTrue(HalfDomino[][] boardGame, Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
-		boardGame[xLeft][yLeft] = domino.getLeft();
-		boardGame[xRight][yRight] = domino.getRight();
-		return true;
-	}
 		
 	// Verifie que le plateau reste de la bonne dimension
 	public static boolean checkIfInBounds(HalfDomino boardGame[][], Domino domino, int xLeft, int yLeft, int xRight, int yRight) {
@@ -99,35 +93,6 @@ public class BoardGame {
                     break;
                 }
         }
-
-		/*for (int i = 0; i < gameBoardSize; ++i) {
-		    for (int j = 0; j < gameBoardSize; ++j) {
-		        if (boardGame[i][j] != null) {
-		            for (int k = i + 1; k < gameBoardSize; ++k)
-                    {
-                        if (boardGame[k][j] == null) {
-                            if (ecartDominoI < k - i - 1)
-                                ecartDominoI = k - i - 1;
-                            break;
-                        }
-                        else if (k == gameBoardSize - 1)
-                            if (ecartDominoI < k - i)
-                                ecartDominoI = k - i;
-                    }
-                    for (int l = j + 1; l < gameBoardSize; ++l)
-                    {
-                        if (boardGame[i][l] == null) {
-                            if (ecartDominoJ < l - j - 1)
-                                ecartDominoJ = l - j - 1;
-                            break;
-                        }
-                        else if (l == gameBoardSize - 1)
-                            if (ecartDominoJ < l - j)
-                                ecartDominoJ = l - j;
-                    }
-                }
-            }
-        }*/
 
 		if (ecartDominoI < maxSizeField && ecartDominoJ < maxSizeField) {
 			return true;

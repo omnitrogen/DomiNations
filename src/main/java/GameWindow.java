@@ -11,6 +11,8 @@ public class GameWindow implements MouseListener {
 
     private Game currentGame;
     private DeckPanel dominoDeckWindow;
+    private DeckPanel dominoDeckWindowBis;
+    private ArrayList<DeckPanel> deckQueue;
     private ConsolePanel consoleWindow;
 
     private King next;
@@ -30,11 +32,16 @@ public class GameWindow implements MouseListener {
         consoleWindow = new ConsolePanel();
         boardGameWindow = new BoardGameWindow(this, currentGame.getPlayerList());
         dominoDeckWindow = new DeckPanel(new ArrayList<>(), this);
+        dominoDeckWindowBis = new DeckPanel(new ArrayList<>(), this);
+        deckQueue = new ArrayList<>();
+        deckQueue.add(dominoDeckWindow);
+        deckQueue.add(dominoDeckWindowBis);
 
         boardAndDeckContainer = new JPanel();
         boardAndDeckContainer.setLayout(new GridLayout(1, 2));
         boardAndDeckContainer.add(boardGameWindow.getBoardsFrame());
         boardAndDeckContainer.add(dominoDeckWindow);
+        boardAndDeckContainer.add(dominoDeckWindowBis);
 
         window.setLayout(new BorderLayout());
         window.add(boardAndDeckContainer, BorderLayout.CENTER);
@@ -52,7 +59,6 @@ public class GameWindow implements MouseListener {
     private void step() {
         if (currentGame.endOfTurn()) {
             refreshDominoDeck();
-            consoleWindow.log("Nouveau tour.");
         }
 
         callForNextPlayer();
@@ -74,13 +80,15 @@ public class GameWindow implements MouseListener {
     }
 
     private void refreshDominoDeck() {
-        boardAndDeckContainer.remove(dominoDeckWindow);
+        boardAndDeckContainer.remove(deckQueue.get(0));
+        deckQueue.remove(0);
 
         ArrayList<Domino> deck = currentGame.pickDominosAtBeginningOfTurn();
         if (deck != null) {
-            dominoDeckWindow = new DeckPanel(deck, this);
+            DeckPanel current = new DeckPanel(deck, this);
 
-            boardAndDeckContainer.add(dominoDeckWindow);
+            deckQueue.add(current);
+            boardAndDeckContainer.add(current);
             boardAndDeckContainer.revalidate();
             boardAndDeckContainer.repaint();
         }
@@ -113,14 +121,16 @@ public class GameWindow implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        ImagePanel dominoPanel = (ImagePanel)mouseEvent.getComponent();
+        if (mouseEvent.getComponent().getX() >= 142) {
+            ImagePanel dominoPanel = (ImagePanel)mouseEvent.getComponent();
 
-        if (dominoPanel.getDomino().getLinkedKing() == null) {
-            dominoPanel.setBorder(BorderFactory.createLineBorder(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getColor()));
-            dominoPanel.getDomino().setLinkedKing(next);
-            next.setLocation(dominoPanel.getDomino());
-            currentGame.addDominoWithKing(dominoPanel.getDomino());
-            step();
+            if (dominoPanel.getDomino().getLinkedKing() == null) {
+                dominoPanel.setBorder(BorderFactory.createLineBorder(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getColor()));
+                dominoPanel.getDomino().setLinkedKing(next);
+                next.setLocation(dominoPanel.getDomino());
+                currentGame.addDominoWithKing(dominoPanel.getDomino());
+                step();
+            }
         }
     }
 

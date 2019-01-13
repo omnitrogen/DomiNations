@@ -15,6 +15,7 @@ public class Game {
     private HashMap<Integer, Domino> selectionBoard;
     private ArrayList<King> kingList;
     public static Random rand = new Random();
+    public boolean selectionPhase;
 
     public Game () {}
 
@@ -26,6 +27,7 @@ public class Game {
         kingList = new ArrayList<>();
         deckWithKings = new ArrayList<>();
         nextToPick = new ArrayList<>();
+        selectionPhase = true;
 
         for (int i = 0; i < numberOfPlayers; i++) {
             this.playerList.add(new Player(i + 1, playerNames.get(i)));
@@ -133,6 +135,8 @@ public class Game {
     {
         turnDeck.remove(domino);
         deckWithKings.add(domino);
+        if (deckWithKings.size() == ((numberOfPlayers == 3) ? 3 : 4))
+            selectionPhase = false;
     }
 
     public void enqueueKing(King k) {
@@ -141,6 +145,8 @@ public class Game {
 
     public void removeDominoWithKing(Domino domino) {
         deckWithKings.remove(domino);
+        if (deckWithKings.size() == 0)
+            selectionPhase = true;
     }
 
     /**
@@ -148,7 +154,7 @@ public class Game {
      */
     public King getNextKingToPlay() {
         //If not the 1st turn (some dominos are picked, and thus placed in deckWithKings)
-        if (turnDeck.size() == 0 && deckWithKings.size() > 0)
+        if (!selectionPhase && deckWithKings.size() > 0)
         {
             Domino minimum = null;
 
@@ -178,7 +184,7 @@ public class Game {
     }
 
     public boolean isSelectionPhase() {
-        return turnDeck.size() > 0;
+        return selectionPhase;
     }
 
     public boolean isPlacementPhase() {
@@ -186,6 +192,6 @@ public class Game {
     }
 
     public boolean endOfTurn() {
-        return (turnDeck.size() == 0 && deckWithKings.size() == 0);
+        return (turnDeck.size() == 0);
     }
 }

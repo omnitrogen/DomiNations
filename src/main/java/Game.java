@@ -16,6 +16,7 @@ public class Game {
     private ArrayList<King> kingList;
     public static Random rand = new Random();
     public boolean selectionPhase;
+    public int isLastTurn;
 
     public Game () {}
 
@@ -116,9 +117,8 @@ public class Game {
      * Pick numberOfKings elements from the deck and place them in turnDeck
      */
     public ArrayList<Domino> pickDominosAtBeginningOfTurn() {
-        if (turnDeck.size() != 0)
+        if (turnDeck != null && turnDeck.size() != 0 && deckWithKings.size() == 0)
         {
-            deckWithKings.clear();
             deckWithKings.addAll(turnDeck);
             turnDeck.clear();
         }
@@ -133,7 +133,8 @@ public class Game {
 
     public void addDominoWithKing(Domino domino)
     {
-        turnDeck.remove(domino);
+        if (turnDeck != null)
+            turnDeck.remove(domino);
         deckWithKings.add(domino);
         if (deckWithKings.size() == ((numberOfPlayers == 3) ? 3 : 4))
             selectionPhase = false;
@@ -153,6 +154,9 @@ public class Game {
      * @return the next king to play (and thus the number of the next player to play)
      */
     public King getNextKingToPlay() {
+        if (deck.size() == 0)
+            ++isLastTurn;
+
         //If not the 1st turn (some dominos are picked, and thus placed in deckWithKings)
         if (!selectionPhase && deckWithKings.size() > 0)
         {
@@ -192,6 +196,10 @@ public class Game {
     }
 
     public boolean endOfTurn() {
-        return (turnDeck.size() == 0);
+        return (turnDeck == null || turnDeck.size() == 0) || deck.size() == 0;
+    }
+
+    public boolean endOfGame() {
+        return deck.size() == 0 && deckWithKings.size() == 0 && (turnDeck == null || turnDeck.size() == 0) && isLastTurn == (numberOfPlayers == 3 ? 3 : 4);
     }
 }

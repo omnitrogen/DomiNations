@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class GameWindow implements MouseListener {
     private JFrame window;
+    private JButton withdraw;
     private JPanel boardAndDeckContainer;
     private BoardGameWindow boardGameWindow;
 
@@ -43,9 +44,13 @@ public class GameWindow implements MouseListener {
         boardAndDeckContainer.add(dominoDeckWindow);
         boardAndDeckContainer.add(dominoDeckWindowBis);
 
+        withdraw = new JButton("Defausser");
+        withdraw.addMouseListener(this);
+
         window.setLayout(new BorderLayout());
         window.add(boardAndDeckContainer, BorderLayout.CENTER);
         window.add(consoleWindow.getConsoleFrame(), BorderLayout.SOUTH);
+        window.add(withdraw, BorderLayout.NORTH);
 
         window.pack();
         window.setVisible(true);
@@ -57,42 +62,7 @@ public class GameWindow implements MouseListener {
     }
 
     private void step() {
-        if (currentGame.endOfTurn()) {
-            refreshDominoDeck();
-        }
-
-        callForNextPlayer();
-    }
-
-    private void callForNextPlayer() {
-        next = currentGame.getNextKingToPlay();
-
-        if (currentGame.isPlacementPhase()) {
-            consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() + ", placez la premiere moitié de votre domino.");
-            boardGameWindow.updateBoards(next.getNbPlayer(), next.getLocation());
-        }
-        else
-            consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() +  ", choisissez un domino parmi ceux de la pioche.");
-    }
-
-    public void askForSecondHalf() {
-        consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() +  ", placez la seconde moitié de votre domino.");
-    }
-
-    private void refreshDominoDeck() {
-        boardAndDeckContainer.remove(deckQueue.get(0));
-        deckQueue.remove(0);
-
-        ArrayList<Domino> deck = currentGame.pickDominosAtBeginningOfTurn();
-        if (deck != null) {
-            DeckPanel current = new DeckPanel(deck, this);
-
-            deckQueue.add(current);
-            boardAndDeckContainer.add(current);
-            boardAndDeckContainer.revalidate();
-            boardAndDeckContainer.repaint();
-        }
-        else {
+        if (currentGame.endOfGame()) {
             consoleWindow.log("Il n'y a plus de pioche, le jeu est fini !");
 
             Player winner = null;
@@ -103,7 +73,47 @@ public class GameWindow implements MouseListener {
                     winner = p;
             }
 
-            consoleWindow.log("Le gagnant est: " + winner.getName());
+            consoleWindow.log("Le gagnant est: " + winner.getName() + " avec " + winner.getScore() + " points !");
+        }
+        else {
+            if (currentGame.endOfTurn()) {
+                refreshDominoDeck();
+            }
+
+            callForNextPlayer();
+        }
+    }
+
+    private void callForNextPlayer() {
+        next = currentGame.getNextKingToPlay();
+
+        if (currentGame.isPlacementPhase()) {
+            withdraw.setEnabled(true);
+            consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() + ", placez la premiere moitié de votre domino.");
+            boardGameWindow.updateBoards(next.getNbPlayer(), next.getLocation());
+        }
+        else {
+            withdraw.setEnabled(false);
+            consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() + ", choisissez un domino parmi ceux de la pioche.");
+        }
+    }
+
+    public void askForSecondHalf() {
+        consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() +  ", placez la seconde moitié de votre domino.");
+    }
+
+    private void refreshDominoDeck() {
+
+        ArrayList<Domino> deck = currentGame.pickDominosAtBeginningOfTurn();
+        if (deck != null) {
+            boardAndDeckContainer.remove(deckQueue.get(0));
+            deckQueue.remove(0);
+            DeckPanel current = new DeckPanel(deck, this);
+
+            deckQueue.add(current);
+            boardAndDeckContainer.add(current);
+            boardAndDeckContainer.revalidate();
+            boardAndDeckContainer.repaint();
         }
     }
 
@@ -121,7 +131,8 @@ public class GameWindow implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        if (mouseEvent.getComponent().getX() >= 142) {
+        //Dirty hack to ignore second deck list, sorry
+        if (mouseEvent.getComponent().getX() >= 142 && currentGame.isSelectionPhase()) {
             ImagePanel dominoPanel = (ImagePanel)mouseEvent.getComponent();
 
             if (dominoPanel.getDomino().getLinkedKing() == null) {
@@ -131,6 +142,10 @@ public class GameWindow implements MouseListener {
                 currentGame.addDominoWithKing(dominoPanel.getDomino());
                 step();
             }
+        }
+        //Same here :(
+        else if (mouseEvent.getComponent().getX() == 0 && withdraw.isEnabled()) {
+            endOfPlacement();
         }
     }
 

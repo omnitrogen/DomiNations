@@ -17,6 +17,7 @@ public class Player {
         name_ = name;
         score_ = 0;
         boardGamePlayer_ = new BoardGame(number);
+        verificationBoardGame_ = new boolean[9][9];
 
         if (number == 1)
             color_ = Color.MAGENTA;
@@ -50,11 +51,12 @@ public class Player {
 				verificationBoardGame_[k][l] = false;
 			}
     	}
-    	
+
+        HalfDomino[][] boardGame = boardGamePlayer_.getBoardGame();
+
     	for (int i = 0; i < BoardGame.gameBoardSize; i++) {
 			for (int j = 0; j < BoardGame.gameBoardSize; j++) {
-				HalfDomino[][] boardGame = boardGamePlayer_.getBoardGame();
-				if (verificationBoardGame_[i][j] == false && boardGame[i][j].getTerrain() != HalfDomino.TerrainType.CASTLE) {
+				if (verificationBoardGame_[i][j] == false && boardGame[i][j] != null && boardGame[i][j].getTerrain() != HalfDomino.TerrainType.CASTLE) {
 					verificationBoardGame_[i][j] = true;
 
                     nbCrown = boardGame[i][j].getNbCrowns();
@@ -68,25 +70,25 @@ public class Player {
     }
 
     public void verifyIfNeighbour(int i, int j, HalfDomino[][] boardGame, boolean[][] verificationBoardGame) {
-        if (i < 8 && verificationBoardGame[i + 1][j] == false && boardGame[i + 1][j].getTerrain() == boardGame[i][j].getTerrain()) {
+        if (i < 8 && verificationBoardGame[i + 1][j] == false && boardGame[i + 1][j] != null && boardGame[i][j] != null && boardGame[i + 1][j].getTerrain() == boardGame[i][j].getTerrain()) {
             verificationBoardGame[i + 1][j] = true;
             nbTerrain = nbTerrain + 1;
             nbCrown = nbCrown + boardGame[i + 1][j].getNbCrowns();
             verifyIfNeighbour(i + 1, j, boardGame, verificationBoardGame);
         }
-        if (i > 0 && verificationBoardGame[i - 1][j] == false && boardGame[i - 1][j].getTerrain() == boardGame[i][j].getTerrain()) {
+        if (i > 0 && verificationBoardGame[i - 1][j] == false && boardGame[i - 1][j] != null && boardGame[i][j] != null && boardGame[i - 1][j].getTerrain() == boardGame[i][j].getTerrain()) {
             verificationBoardGame[i - 1][j] = true;
             nbTerrain = nbTerrain + 1;
             nbCrown = nbCrown + boardGame[i - 1][j].getNbCrowns();
             verifyIfNeighbour(i - 1, j, boardGame, verificationBoardGame);
         }
-        if (j < 8 && verificationBoardGame[i][j + 1] == false && boardGame[i][j + 1].getTerrain() == boardGame[i][j].getTerrain()) {
+        if (j < 8 && verificationBoardGame[i][j + 1] == false && boardGame[i][j + 1] != null && boardGame[i][j] != null && boardGame[i][j + 1].getTerrain() == boardGame[i][j].getTerrain()) {
             verificationBoardGame[i][j + 1] = true;
             nbTerrain = nbTerrain + 1;
             nbCrown = nbCrown + boardGame[i][j + 1].getNbCrowns();
             verifyIfNeighbour(i, j + 1, boardGame, verificationBoardGame);
         }
-        if (j > 0 && verificationBoardGame[i][j - 1] == false && boardGame[i][j - 1].getTerrain() == boardGame[i][j].getTerrain()) {
+        if (j > 0 && verificationBoardGame[i][j - 1] == false && boardGame[i][j - 1] != null && boardGame[i][j] != null && boardGame[i][j - 1].getTerrain() == boardGame[i][j].getTerrain()) {
             verificationBoardGame[i][j - 1] = true;
             nbTerrain = nbTerrain + 1;
             nbCrown = nbCrown + boardGame[i][j - 1].getNbCrowns();

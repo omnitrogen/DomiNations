@@ -23,8 +23,8 @@ public class GameWindow implements MouseListener {
 
     private void initialize() {
         window = new JFrame("DomiNations");
-        window.setMinimumSize(new Dimension(500, 500));
-        window.setMaximumSize(new Dimension(500, 500));
+        window.setMinimumSize(new Dimension(900, 900));
+        window.setMaximumSize(new Dimension(900, 900));
         window.setResizable(false);
 
         consoleWindow = new ConsolePanel();
@@ -50,8 +50,10 @@ public class GameWindow implements MouseListener {
     }
 
     private void step() {
-        if (currentGame.endOfTurn())
+        if (currentGame.endOfTurn()) {
             refreshDominoDeck();
+            consoleWindow.log("Nouveau tour.");
+        }
 
         callForNextPlayer();
     }
@@ -60,15 +62,15 @@ public class GameWindow implements MouseListener {
         next = currentGame.getNextKingToPlay();
 
         if (currentGame.isPlacementPhase()) {
-            consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez la premiere moitié de votre domino.");
+            consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() + ", placez la premiere moitié de votre domino.");
             boardGameWindow.updateBoards(next.getNbPlayer(), next.getLocation());
         }
         else
-            consoleWindow.log("Joueur " + next.getNbPlayer() + ", choisissez un domino parmi ceux de la pioche.");
+            consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() +  ", choisissez un domino parmi ceux de la pioche.");
     }
 
     public void askForSecondHalf() {
-        consoleWindow.log("Joueur " + next.getNbPlayer() + ", placez la seconde moitié de votre domino.");
+        consoleWindow.log(currentGame.getPlayerList().get(next.getNbPlayer() - 1).getName() +  ", placez la seconde moitié de votre domino.");
     }
 
     private void refreshDominoDeck() {
@@ -101,6 +103,7 @@ public class GameWindow implements MouseListener {
         currentGame.removeDominoWithKing(next.getLocation());
         next.getLocation().setLinkedKing(null);
         next.setLocation(null);
+        currentGame.enqueueKing(next);
         step();
     }
 

@@ -10,6 +10,7 @@ public class Game {
     private ArrayList<Domino> deck;
     private ArrayList<Domino> deckWithKings;
     private ArrayList<Domino> turnDeck;
+    private ArrayList<King> nextToPick;
     private ArrayList<Player> playerList;
     private HashMap<Integer, Domino> selectionBoard;
     private ArrayList<King> kingList;
@@ -24,6 +25,7 @@ public class Game {
         playerList = new ArrayList<>();
         kingList = new ArrayList<>();
         deckWithKings = new ArrayList<>();
+        nextToPick = new ArrayList<>();
 
         for (int i = 0; i < numberOfPlayers; i++) {
             this.playerList.add(new Player(i + 1, playerNames.get(i)));
@@ -133,6 +135,10 @@ public class Game {
         deckWithKings.add(domino);
     }
 
+    public void enqueueKing(King k) {
+        nextToPick.add(k);
+    }
+
     public void removeDominoWithKing(Domino domino) {
         deckWithKings.remove(domino);
     }
@@ -153,6 +159,11 @@ public class Game {
             }
 
             return minimum.getLinkedKing();
+        }
+        else if (nextToPick.size() > 0) {
+            King k = nextToPick.get(0);
+            nextToPick.remove(k);
+            return k;
         }
         else
         {

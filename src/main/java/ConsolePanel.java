@@ -16,7 +16,7 @@ public class ConsolePanel extends JPanel {
         console.setLineWrap(true);
         console.setWrapStyleWord(true);
         console.setRows(7);
-        console.setColumns(60);
+        console.setColumns(108);
 
         scroll = new JScrollPane(console);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

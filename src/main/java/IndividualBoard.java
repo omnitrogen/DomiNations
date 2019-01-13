@@ -84,6 +84,9 @@ public class IndividualBoard extends JPanel implements MouseListener {
         int index1 = layout.indexOf(label1);
         int index2 = layout.indexOf(label2);
 
+        if (index1 == index2)
+            return false;
+
         //label 2 left of label 1
         if ((index1 % 9) > 0 && index1 - index2 == 1)
             return true;
@@ -108,34 +111,48 @@ public class IndividualBoard extends JPanel implements MouseListener {
         //FIXME: verifications au placement
         if (isActive) {
             JLabel label = (JLabel) mouseEvent.getComponent();
+            if (owner.getBoardGame().getBoardGame()[layout.indexOf(label) % 9][layout.indexOf(label) / 9] == null) {
+                if (firstClick || (!firstClick && areAdjacent(label, firstClickLabel))) {
+                    BufferedImage img = null;
+                    try {
+                        img = ImageIO.read(new File(toPlace.getPathToImg()));
 
-            if (firstClick || (!firstClick && areAdjacent(label, firstClickLabel))) {
-                BufferedImage img = null;
-                try {
-                    img = ImageIO.read(new File(toPlace.getPathToImg()));
+                        BufferedImage resized = new BufferedImage(mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getType());
+                        Graphics2D graphics = resized.createGraphics();
+                        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                        if (firstClick)
+                            graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), 0, 0, img.getWidth() / 2, img.getHeight(), null);
+                        else
+                            graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getWidth() / 2, 0, img.getWidth(), img.getHeight(), null);
+                        graphics.dispose();
+                        label.setOpaque(true);
+                        label.setIcon(new ImageIcon(resized));
 
-                    BufferedImage resized = new BufferedImage(mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getType());
-                    Graphics2D graphics = resized.createGraphics();
-                    graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                    if (firstClick)
-                        graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), 0, 0, img.getWidth() / 2, img.getHeight(), null);
-                    else
-                        graphics.drawImage(img, 0, 0, mouseEvent.getComponent().getWidth(), mouseEvent.getComponent().getHeight(), img.getWidth() / 2, 0, img.getWidth(), img.getHeight(), null);
-                    graphics.dispose();
-                    label.setOpaque(true);
-                    label.setIcon(new ImageIcon(resized));
-
-                    firstClick = !firstClick;
-                    if (firstClick) {
-                        isActive = false;
-                        firstClickLabel = null;
-                        gameWindow.endOfPlacement();
-                    } else {
-                        firstClickLabel = label;
-                        gameWindow.askForSecondHalf();
+                        firstClick = !firstClick;
+                        if (firstClick) {
+                            if (!BoardGame.checkDominoWellPlaced(owner.getBoardGame().getBoardGame(), toPlace,
+                                    layout.indexOf(firstClickLabel) % 9, layout.indexOf(firstClickLabel) / 9,
+                                    layout.indexOf(label) % 9, layout.indexOf(label) / 9)) {
+                                label.setOpaque(false);
+                                label.setIcon(null);
+                                label.revalidate();
+                                firstClickLabel.setOpaque(false);
+                                firstClickLabel.setIcon(null);
+                                firstClickLabel.revalidate();
+                                firstClickLabel = null;
+                                console.log("Erreur: placement incorrect. Le domino doit etre adjacent a un autre domino au terrain identique, et le royaume ne doit pas faire plus de 5x5 cases.");
+                            } else {
+                                firstClickLabel = null;
+                                isActive = false;
+                                gameWindow.endOfPlacement();
+                            }
+                        } else {
+                            firstClickLabel = label;
+                            gameWindow.askForSecondHalf();
+                        }
+                    } catch (IOException e) {
+                        console.log("Error loading image: image not found.");
                     }
-                } catch (IOException e) {
-                    console.log("Error loading image: image not found.");
                 }
             }
         }

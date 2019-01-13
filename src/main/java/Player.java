@@ -19,11 +19,11 @@ public class Player {
         boardGamePlayer_ = new BoardGame(number);
 
         if (number == 1)
-            color_ = Color.ORANGE;
-        else if (number == 2)
-            color_ = Color.BLUE;
-        else if (number == 3)
             color_ = Color.MAGENTA;
+        else if (number == 2)
+            color_ = Color.RED;
+        else if (number == 3)
+            color_ = Color.PINK;
         else if (number == 4)
             color_ = Color.DARK_GRAY;
     }
@@ -39,6 +39,8 @@ public class Player {
     public Color getColor() { return color_; }
 
     public int getNumber() { return number_; }
+
+    public BoardGame getBoardGame() { return boardGamePlayer_; }
 
     public void calculatePlayerScore() {
     	score_ = 0;
